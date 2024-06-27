@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="lightGrey">#eeeeee</color>
+    <color name="darkGrey">#424242</color>
+
+    <color name="primary200">#f89996</color>
+    <color name="primary500">#ff3c26</color>
+    <color name="primary700">#df2422</color>
+    <color name="secondary200">#ffca7f</color>
+    <color name="secondary700">#f57902</color>
+
+    <color name="dividerColor">#44000000</color>
+    <color name="text_primary_on_light">#DE000000</color>
+    <color name="text_secondary_on_light">#8A000000</color>
+</resources>

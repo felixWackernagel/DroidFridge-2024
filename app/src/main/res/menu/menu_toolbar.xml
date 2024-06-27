@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/updatePreferencesFragment"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/preferences_menu_title"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/importExportFragment"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/import_export_menu_title"
+        android:visible="false"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/search_view_hint"
+        android:visible="false"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|withText" />
+</menu>

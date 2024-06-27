@@ -1,0 +1,84 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <drawable name="saveItemButtonIcon">@drawable/round_done_24</drawable>
+    <drawable name="deleteItemButtonIcon">@drawable/round_delete_24</drawable>
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary500</item>
+        <item name="colorPrimaryVariant">@color/primary700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary200</item>
+        <item name="colorSecondaryVariant">@color/secondary700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="active_background_color">@color/white</item>
+        <item name="inactive_background_color">@color/lightGrey</item>
+        <item name="main_user_color">@color/secondary700</item>
+        <item name="regular_user_color">@color/black</item>
+        <item name="fab_tint_background">@color/secondary700</item>
+        <item name="fab_border_color">@color/secondary700</item>
+        <item name="fab_icon_color">@color/white</item>
+    </style>
+
+    <attr name="active_background_color" format="reference" />
+    <attr name="inactive_background_color" format="reference" />
+    <attr name="fab_tint_background" format="reference" />
+    <attr name="fab_border_color" format="reference" />
+    <attr name="fab_icon_color" format="reference" />
+    <attr name="main_user_color" format="reference" />
+    <attr name="regular_user_color" format="reference" />
+
+    <style name="MyApplication_LinearLayoutCompat" parent="Theme.MyApplication">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">0dp</item>
+        <item name="divider">@drawable/divider</item>
+        <item name="showDividers">middle</item>
+    </style>
+
+    <style name="MyApplication_TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="MyApplication_LinearLayoutCompat_CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_margin">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">4dp</item>
+    </style>
+
+    <style name="MyApplication_LinearLayoutCompat_CardView_Single_Text" parent="Theme.MyApplication">
+        <item name="android:minHeight">50dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MyApplication_Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:minHeight">60dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="MyApplication_Button.SaveItem">
+        <item name="android:text">@string/save_button</item>
+        <item name="icon">@drawable/saveItemButtonIcon</item>
+    </style>
+
+    <style name="MyApplication_Button.DeleteItem">
+        <item name="android:text">@string/delete_button</item>
+        <item name="icon">@drawable/deleteItemButtonIcon</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+</resources>

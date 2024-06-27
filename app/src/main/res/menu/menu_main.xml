@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.myapplication.MainActivity">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@drawable/round_home_24"
+            android:title="@string/main_menu_title" />
+        <item
+            android:id="@+id/productsListFragment"
+            android:icon="@drawable/round_apps_24"
+            android:title="@string/products_list_menu_title" />
+        <item
+            android:id="@+id/shopsListFragment"
+            android:icon="@drawable/round_domain_24"
+            android:title="@string/shops_list_menu_title" />
+    </group>
+</menu>
