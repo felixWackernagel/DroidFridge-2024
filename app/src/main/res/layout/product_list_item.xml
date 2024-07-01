@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="product"
@@ -10,12 +11,20 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/MyApplication_LinearLayoutCompat_CardView">
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp">
         <TextView
             android:id="@+id/product_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MyApplication_LinearLayoutCompat_CardView_Single_Text"
-            android:text="@{product.name}"/>
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_primary_on_light"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@{product.name}"
+            tools:text="Erdbeeren 250g Schale"/>
     </androidx.cardview.widget.CardView>
 </layout>
