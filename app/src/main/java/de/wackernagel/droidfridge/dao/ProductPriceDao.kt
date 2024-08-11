@@ -22,6 +22,6 @@ interface ProductPriceDao {
     @Query("SELECT * FROM product_prices WHERE id = :id")
     fun get(id: Long): LiveData<ProductPrice>
 
-    @Query("SELECT * FROM product_prices WHERE product_id = :productId ORDER BY creationDate ASC")
+    @Query("SELECT * FROM product_prices WHERE product_id = :productId ORDER BY created_at ASC")
     fun getAllProductPrices(productId: Long): LiveData<List<ProductPrice>>
 }

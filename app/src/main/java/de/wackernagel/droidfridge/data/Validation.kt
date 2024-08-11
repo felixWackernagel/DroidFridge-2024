@@ -1,6 +1,6 @@
 package de.wackernagel.droidfridge.data
 
-import de.wackernagel.droidfridge.MyApplication
+import de.wackernagel.droidfridge.DroidFridgeApplication
 import de.wackernagel.droidfridge.R
 
 class Validation {
@@ -12,6 +12,6 @@ class Validation {
             }
         }
         private fun getResourceText(id: Int) =
-            MyApplication.appCtx!!.resources.getText(id).toString()
+            DroidFridgeApplication.appCtx!!.resources.getText(id).toString()
     }
 }

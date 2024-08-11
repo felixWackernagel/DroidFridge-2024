@@ -11,18 +11,33 @@ import java.util.Date
 
 @Entity(
     tableName = "product_prices",
-    foreignKeys = [ForeignKey(entity = Product::class, childColumns = ["product_id"], parentColumns = ["id"])],
-    indices = [Index(value=["id", "product_id"])]
+    foreignKeys = [
+        ForeignKey(
+            entity = Product::class,
+            parentColumns = [ "id" ],
+            childColumns = [ "product_id" ]
+        )
+    ],
+    indices = [
+        Index(
+            value= [ "product_id" ]
+        )
+    ]
 )
 data class ProductPrice(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long = 0L,
+
     @ColumnInfo(name = "product_id")
     var productId: Long? = null,
-    var creationDate: Date = Date(),
+
+    @ColumnInfo(name = "created_at")
+    var createdAt: Date = Date(),
+
+    @ColumnInfo(name = "price")
     var price: String = ""
 ) {
     @Ignore
-    var creationDateAsString: String = DateFormat.getDateInstance( DateFormat.MEDIUM ).format( creationDate )
+    var createdAtAsString: String = DateFormat.getDateInstance( DateFormat.MEDIUM ).format( createdAt )
 }

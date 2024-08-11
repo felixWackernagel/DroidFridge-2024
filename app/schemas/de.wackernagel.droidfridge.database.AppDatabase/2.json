@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "e45ba7dc7dc469097dad8181278cffde",
+    "identityHash": "a00f0cb06cf7dcff55422a6ff6b0be67",
     "entities": [
       {
         "tableName": "products",
@@ -54,7 +54,7 @@
       },
       {
         "tableName": "product_prices",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `product_id` INTEGER, `creationDate` INTEGER NOT NULL, `price` TEXT NOT NULL, FOREIGN KEY(`product_id`) REFERENCES `products`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `product_id` INTEGER, `created_at` INTEGER NOT NULL, `price` TEXT NOT NULL, FOREIGN KEY(`product_id`) REFERENCES `products`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,8 +69,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "creationDate",
-            "columnName": "creationDate",
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -89,14 +89,13 @@
         },
         "indices": [
           {
-            "name": "index_product_prices_id_product_id",
+            "name": "index_product_prices_product_id",
             "unique": false,
             "columnNames": [
-              "id",
               "product_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_product_prices_id_product_id` ON `${TABLE_NAME}` (`id`, `product_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_product_prices_product_id` ON `${TABLE_NAME}` (`product_id`)"
           }
         ],
         "foreignKeys": [
@@ -167,7 +166,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e45ba7dc7dc469097dad8181278cffde')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a00f0cb06cf7dcff55422a6ff6b0be67')"
     ]
   }
 }
