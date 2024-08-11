@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.myapplication.fragment.AddProductFragment">
+    tools:context="de.wackernagel.droidfridge.fragment.AddProductFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.example.myapplication.viewmodel.AddProductViewModel" />
+            type="de.wackernagel.droidfridge.viewmodel.AddProductViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

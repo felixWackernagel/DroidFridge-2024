@@ -5,7 +5,7 @@
     <data>
         <variable
             name="product"
-            type="com.example.myapplication.data.Product" />
+            type="de.wackernagel.droidfridge.data.Product" />
     </data>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

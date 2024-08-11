@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myapplication.viewmodel.ShopsListViewModel" />
+            type="de.wackernagel.droidfridge.viewmodel.ShopsListViewModel" />
     </data>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shops_list"

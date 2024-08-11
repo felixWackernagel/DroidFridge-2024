@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "de.wackernagel.droidfridge"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "de.wackernagel.droidfridge"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
