@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.data.Shop
 import com.example.myapplication.databinding.ShopListItemBinding
 
-class ShopsListAdapter(val clickListener: (vaccinationTypeId: Long) -> Unit ):
+class ShopsListAdapter( private val clickListener: (shopId: Long) -> Unit ):
     ListAdapter<Shop, ShopsListAdapter.ViewHolder>(ShopDiffItemCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =

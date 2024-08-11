@@ -4,23 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.adapter.ShopsListAdapter
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentShopsListBinding
 import com.example.myapplication.viewmodel.ShopsListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShopsListFragment: BaseFragment() {
 
     private var _binding: FragmentShopsListBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<ShopsListViewModel>()
+
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _binding = FragmentShopsListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        val application = requireNotNull(activity).application
-        val viewModelFactory = ShopsListViewModel.Factory(AppDatabase.getInstance( application ).shopDao)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[ShopsListViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val adapter = ShopsListAdapter { shopId ->
@@ -53,7 +54,7 @@ class ShopsListFragment: BaseFragment() {
 //            }
 //        }
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

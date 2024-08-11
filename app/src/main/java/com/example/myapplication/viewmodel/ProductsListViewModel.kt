@@ -1,16 +1,17 @@
 package com.example.myapplication.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.Product
 import com.example.myapplication.database.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ProductsListViewModel(private val repository: ProductRepository): BaseViewModel() {
+@HiltViewModel
+class ProductsListViewModel @Inject constructor(private val repository: ProductRepository): BaseViewModel() {
     val products : LiveData<List<Product>> = repository.allProducts
 
     fun insert(product: Product) = viewModelScope.launch {
@@ -28,16 +29,6 @@ class ProductsListViewModel(private val repository: ProductRepository): BaseView
     fun update(product: Product) = viewModelScope.launch {
         withContext( Dispatchers.IO ) {
             repository.update(product)
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val repository: ProductRepository): ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(ProductsListViewModel::class.java)) {
-                return ProductsListViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel")
         }
     }
 }

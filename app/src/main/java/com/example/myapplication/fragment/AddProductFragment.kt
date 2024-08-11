@@ -5,21 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.myapplication.MyApplication
 import com.example.myapplication.R
 import com.example.myapplication.data.Validation
 import com.example.myapplication.databinding.FragmentAddProductBinding
 import com.example.myapplication.ui.formfields.FormFieldText
 import com.example.myapplication.viewmodel.AddProductViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddProductFragment : BaseFragment() {
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<AddProductViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +30,6 @@ class AddProductFragment : BaseFragment() {
     ): View {
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
         val view = binding.root
-        val application = requireNotNull(activity).application
-        val productRepository = ( application as MyApplication).productRepository
-        val viewModelFactory = AddProductViewModel.Factory(productRepository)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[AddProductViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val fieldName = FormFieldText(

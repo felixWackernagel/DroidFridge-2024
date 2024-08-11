@@ -1,13 +1,19 @@
 package com.example.myapplication.viewmodel
 
-import com.example.myapplication.database.ProductRepository
 import android.database.sqlite.SQLiteConstraintException
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.database.ProductRepository
+import com.example.myapplication.di.UpdateProductViewModelFactory
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
-class UpdateProductViewModel (productId: Long, private val productRepository: ProductRepository) : BaseViewModel() {
+@HiltViewModel(assistedFactory = UpdateProductViewModelFactory::class)
+class UpdateProductViewModel @AssistedInject constructor(
+    @Assisted productId: Long,
+    private val productRepository: ProductRepository
+) : BaseViewModel() {
     var product = productRepository.get(productId)
 
     fun updateProduct() {
@@ -22,16 +28,6 @@ class UpdateProductViewModel (productId: Long, private val productRepository: Pr
             } catch(sqlExc: SQLiteConstraintException) {
                 _insertSuccess.value = false
             }
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val productId: Long, private val productRepository: ProductRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(UpdateProductViewModel::class.java)) {
-                return UpdateProductViewModel(productId, productRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel")
         }
     }
 }

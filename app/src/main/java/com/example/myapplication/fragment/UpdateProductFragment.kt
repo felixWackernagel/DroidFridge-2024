@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -13,14 +14,26 @@ import androidx.navigation.findNavController
 import com.example.myapplication.MyApplication
 import com.example.myapplication.R
 import com.example.myapplication.data.Validation
+import com.example.myapplication.di.UpdateProductViewModelFactory
 import com.example.myapplication.ui.formfields.FormFieldText
+import com.example.myapplication.viewmodel.ProductsListViewModel
 import com.example.myapplication.viewmodel.UpdateProductViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 
-
+@AndroidEntryPoint
 class UpdateProductFragment: BaseFragment() {
     private var _binding: FragmentUpdateProductBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<UpdateProductViewModel>(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<UpdateProductViewModelFactory> {
+                factory -> factory.create( UpdateProductFragmentArgs.fromBundle(requireArguments()).productId )
+            }
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +41,6 @@ class UpdateProductFragment: BaseFragment() {
     ): View {
         _binding = FragmentUpdateProductBinding.inflate(inflater, container, false)
         val view = binding.root
-        val vaccinationTypeId = UpdateProductFragmentArgs.fromBundle(requireArguments()).productId
-        val application = requireNotNull(this.activity).application
-        val productRepository = ( application as MyApplication).productRepository
-        val viewModelFactory = UpdateProductViewModel.Factory( vaccinationTypeId,productRepository)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[UpdateProductViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val fieldTitle = FormFieldText(

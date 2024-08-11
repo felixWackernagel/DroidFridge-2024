@@ -4,25 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.MyApplication
 import com.example.myapplication.adapter.ProductAdapter
 import com.example.myapplication.databinding.FragmentProductListBinding
 import com.example.myapplication.viewmodel.ProductsListViewModel
+import com.example.myapplication.viewmodel.ShopsListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductsListFragment: BaseFragment() {
 
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<ProductsListViewModel>()
+
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        val application = requireNotNull(activity).application
-        val productRepository = ( application as MyApplication ).productRepository
-        val viewModelFactory = ProductsListViewModel.Factory(productRepository)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[ProductsListViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val adapter = ProductAdapter { productId ->
@@ -55,7 +56,7 @@ class ProductsListFragment: BaseFragment() {
             }
         }
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

@@ -1,14 +1,15 @@
 package com.example.myapplication.viewmodel
 
 import android.database.sqlite.SQLiteConstraintException
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.Product
 import com.example.myapplication.database.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddProductViewModel(private val productRepository: ProductRepository) : BaseViewModel()  {
+@HiltViewModel
+class AddProductViewModel @Inject constructor(private val productRepository: ProductRepository) : BaseViewModel()  {
     var newProduct = Product()
 
     fun addProduct() {
@@ -23,16 +24,6 @@ class AddProductViewModel(private val productRepository: ProductRepository) : Ba
             } catch(sqlExc: SQLiteConstraintException) {
                 _insertSuccess.value = false
             }
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val productRepository: ProductRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddProductViewModel::class.java)) {
-                return AddProductViewModel(productRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel")
         }
     }
 }

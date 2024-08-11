@@ -5,16 +5,12 @@ import android.content.Context
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.database.ProductLocalSource
 import com.example.myapplication.database.ProductRepository
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
+@HiltAndroidApp
 class MyApplication: Application() {
-    private val applicationScope = CoroutineScope(SupervisorJob())
-
-    private val database by lazy { AppDatabase.getInstance( this ) }
-    private val productSource by lazy { ProductLocalSource( database.productDao ) }
-    val productRepository by lazy { ProductRepository( productSource ) }
-    val shopDao by lazy { database.shopDao }
 
     companion object {
         val TAG = this::class.simpleName;

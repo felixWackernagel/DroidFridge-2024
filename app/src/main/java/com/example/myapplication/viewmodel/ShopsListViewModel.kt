@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.dao.ShopDao
 import com.example.myapplication.data.Shop
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ShopsListViewModel(private val shopDao: ShopDao): BaseViewModel() {
+@HiltViewModel
+class ShopsListViewModel @Inject constructor(private val shopDao: ShopDao): BaseViewModel() {
     val shops : LiveData<List<Shop>> = shopDao.getAllShops()
 
     fun insert(shop: Shop) = viewModelScope.launch {
@@ -28,16 +31,6 @@ class ShopsListViewModel(private val shopDao: ShopDao): BaseViewModel() {
     fun update(shop: Shop) = viewModelScope.launch {
         withContext( Dispatchers.IO ) {
             shopDao.update(shop)
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val shopDao: ShopDao): ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(ShopsListViewModel::class.java)) {
-                return ShopsListViewModel(shopDao) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel")
         }
     }
 }
