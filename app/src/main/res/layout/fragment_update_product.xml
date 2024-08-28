@@ -14,7 +14,11 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MyApplication_LinearLayoutCompat">
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="0dp"
+            app:divider="@drawable/divider"
+            app:showDividers="middle">
             <include
                 android:id="@+id/title_text_field_binding"
                 app:viewModelValue="@={viewModel.product.name}"

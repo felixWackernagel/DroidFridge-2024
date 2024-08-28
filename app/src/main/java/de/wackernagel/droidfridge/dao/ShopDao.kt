@@ -5,8 +5,10 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import de.wackernagel.droidfridge.data.Shop
+import de.wackernagel.droidfridge.data.ShopWithOpeningHours
 
 @Dao
 interface ShopDao {
@@ -22,6 +24,7 @@ interface ShopDao {
     @Query("SELECT * FROM shops WHERE id = :id")
     fun get(id: Long): LiveData<Shop>
 
+    @Transaction
     @Query("SELECT * FROM shops")
-    fun getAllShops(): LiveData<List<Shop>>
+    fun getShopsWithOpeningHours(): LiveData<List<ShopWithOpeningHours>>
 }

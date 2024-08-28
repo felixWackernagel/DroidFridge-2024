@@ -11,7 +11,7 @@
             android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MyApplication_TextInputLayout"
+            android:layout_marginBottom="10dp"
             android:hint="@string/name_label">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"

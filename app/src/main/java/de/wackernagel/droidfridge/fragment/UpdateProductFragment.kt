@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.withCreationCallback
 
 @AndroidEntryPoint
 class UpdateProductFragment: BaseFragment() {
+
     private var _binding: FragmentUpdateProductBinding? = null
     private val binding get() = _binding!!
 

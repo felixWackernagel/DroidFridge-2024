@@ -2,15 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/updatePreferencesFragment"
-        android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/preferences_menu_title"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/aboutFragment"
+        android:title="@string/about_menu_title"
+        app:showAsAction="never" />
     <item
         android:id="@+id/importExportFragment"
-        android:icon="@android:drawable/ic_menu_save"
         android:title="@string/import_export_menu_title"
         android:visible="false"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_search"
         android:title="@string/search_view_hint"

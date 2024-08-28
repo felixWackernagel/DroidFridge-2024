@@ -20,13 +20,13 @@ abstract class BaseFragment: Fragment() {
 
     fun activateAddFAB(viewModelFunc: () -> Unit ) {
         val fab = this.requireActivity().findViewById<FloatingActionButton>(R.id.add_floating_action_button)
-        fab.isVisible = true
+        fab.show()
         fab.setOnClickListener { viewModelFunc() }
     }
 
     fun deactivateAddFAB() {
         val fab = this.requireActivity().findViewById<FloatingActionButton>(R.id.add_floating_action_button)
-        fab.isVisible = false
+        fab.hide()
     }
 
     fun formValidation(actionButton: Button, formFields: List<FormFieldText>, viewModel: BaseViewModel) = lifecycleScope.launch {

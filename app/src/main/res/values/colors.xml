@@ -6,13 +6,25 @@
     <color name="lightGrey">#eeeeee</color>
     <color name="darkGrey">#424242</color>
 
-    <color name="primary200">#f89996</color>
-    <color name="primary500">#ff3c26</color>
-    <color name="primary700">#df2422</color>
+    <color name="primary100">#FFCDD2</color>
+    <color name="primary200">#EF9A9A</color>
+    <color name="primary300">#E57373</color>
+    <color name="primary400">#EF5350</color>
+    <color name="primary500">#F44336</color>
+    <color name="primary600">#E53935</color>
+    <color name="primary700">#D32F2F</color>
+    <color name="primary800">#C62828</color>
+    <color name="primary900">#B71C1C</color>
+
     <color name="secondary200">#ffca7f</color>
     <color name="secondary700">#f57902</color>
 
     <color name="dividerColor">#44000000</color>
-    <color name="text_primary_on_light">#DE000000</color>
-    <color name="text_secondary_on_light">#8A000000</color>
+    <color name="text_primary_on_light">#1D1B20</color>
+    <color name="text_secondary_on_light">#49454F</color>
+    <color name="black_title_color">#8A000000</color>
+
+    <color name="shop_open">#1B5E20</color>
+    <color name="shop_closed">#B71C1C</color>
+    <color name="shop_last_hour">#F57F17</color>
 </resources>
