@@ -1,14 +1,21 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.jetbrains.kotlin.kapt)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.android.room)
     id("androidx.navigation.safeargs")
-    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "de.wackernagel.droidfridge"
     compileSdk = 34
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         applicationId = "de.wackernagel.droidfridge"
@@ -18,27 +25,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        //Kapt schema directory path when created
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
-
-        // Ensure schema directory creation if doesn't exist
-        tasks.register("createSchemaDir") {
-            doLast {
-                val schemaDir = File("$projectDir/schemas")
-                if (!schemaDir.exists()) {
-                    schemaDir.mkdirs()
-                }
-            }
-        }
-
-        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            dependsOn("createSchemaDir")
-        }
     }
 
     buildTypes {
@@ -63,28 +49,15 @@ android {
 }
 
 dependencies {
-    val room_version = "2.6.1"
-    val nav_version = "2.7.7"
-
-    // dagger hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
-
-    implementation("androidx.room:room-ktx:$room_version")
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-    implementation( "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1" )
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.1")
-
-    implementation( "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1" )
-
-    // used for form validation, see https://medium.com/@asissuthar/simplify-form-validation-using-kotlin-flow-on-android-16c718e3efaa
-    implementation( "io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0" )
-
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.android.room)
+    implementation(libs.android.room.runtime)
+    ksp(libs.android.room.compiler)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.android.coroutines)
+    implementation(libs.android.flowbinding)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
