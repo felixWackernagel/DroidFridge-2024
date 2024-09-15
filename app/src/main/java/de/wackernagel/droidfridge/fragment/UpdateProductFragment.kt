@@ -65,7 +65,7 @@ class UpdateProductFragment: BaseFragment() {
             if (isSuccess != null && !isSuccess ) {
                 Snackbar.make(binding.crudButtons.actionButton,resources.getText(R.string.unique_product_violation),
                     Snackbar.LENGTH_INDEFINITE).show()
-                Log.d(TAG,"There was a problem when updating gender data in the database ...")
+                Log.d("UpdateProductFragment","There was a problem when updating gender data in the database ...")
             }
         })
         return view

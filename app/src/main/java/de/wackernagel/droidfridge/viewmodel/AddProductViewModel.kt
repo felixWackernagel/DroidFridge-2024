@@ -20,7 +20,7 @@ class AddProductViewModel @Inject constructor(private val productRepository: Pro
         viewModelScope.launch {
             try {
                 productRepository.insert( newProduct )
-                _navigateToList.value = true
+                listItems()
             } catch(sqlExc: SQLiteConstraintException) {
                 _insertSuccess.value = false
             }

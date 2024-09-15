@@ -15,13 +15,14 @@
             android:paddingVertical="8dp"
             android:foreground="?attr/selectableItemBackground">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image"
                 android:layout_height="56dp"
                 android:layout_width="56dp"
                 android:contentDescription="@string/shop_item_image_description"
                 android:scaleType="centerCrop"
-                android:src="@drawable/shop_list_item_default"
+                app:srcCompat="@drawable/shop_list_item_default"
+                app:shapeAppearanceOverlay="@style/ImageView.Rounded"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,8 @@
                     android:lineSpacingExtra="6sp"
                     android:fontFamily="sans-serif-medium"
                     android:textFontWeight="400"
-                    tools:text="Bautzner Landstraße" />
+                    tools:text="Bautzner Landstraße"
+                    app:goneUnless="@{shopWithOpeningHours.shop.street}"/>
 
             </LinearLayout>
 

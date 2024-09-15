@@ -24,7 +24,7 @@ class ProductsListFragment: BaseFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val adapter = ProductAdapter { productId ->
-            viewModel.onItemClicked(productId)
+            viewModel.editItem(productId)
         }
         binding.productsList.adapter = adapter
         activateAddFAB { viewModel.addItem() }

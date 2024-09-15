@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="Base.Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.DroidFridge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary900</item>
         <item name="colorPrimaryVariant">@color/primary900</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -11,20 +11,10 @@
 
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">false</item>
-<!--    <item name="android:navigationBarColor">@android:color/transparent</item>-->
-<!--    <item name="android:windowLightNavigationBar">true</item>-->
 
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
-    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+    <style name="Theme.DroidFridge" parent="Base.Theme.DroidFridge" />
 
-    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-    </style>
-
-    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorOnPrimary">@color/primary900</item>
-    </style>
 </resources>

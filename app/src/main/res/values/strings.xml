@@ -1,18 +1,12 @@
 <resources>
     <string name="app_name">DroidFridge</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="home_fragment_label">Dashboard</string>
+
+    <string name="main_description_favorite_fab">Mark as favorite</string>
+    <string name="main_description_toolbar_image">Hero image</string>
+
     <string name="products_list_fragment_label">Products</string>
     <string name="add_product_fragment_label">Add Product</string>
-    <string name="add_shop_fragment_label">Add Shop</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="preferences_menu_title">Settings</string>
-    <string name="import_export_menu_title">Import/Export</string>
-    <string name="search_view_hint">Search</string>
-    <string name="main_menu_title">Dashboard</string>
     <string name="products_list_menu_title">Products</string>
     <string name="fab_add_description">Add new element</string>
     <string name="fab_filter_description">Filter options</string>
@@ -33,8 +27,35 @@
     <string name="shop_closed">closed</string>
     <string name="shop_last_hour">closes soon</string>
 
+    <string name="add_shop_fragment_name">Add Shop</string>
     <string name="add_shop_title">New Shop</string>
     <string name="add_shop_field_name">Name</string>
     <string name="add_shop_field_streetname">Street (optional)</string>
     <string name="add_shop_button">Save</string>
+    <string name="add_shop_message_shop_created">%1$s was created.</string>
+
+    <string name="shop_fragment_name">Shop</string>
+
+    <string translatable="false" name="font_roboto_regular">sans-serif</string>
+    <string translatable="false" name="font_roboto_light">sans-serif-light</string>
+    <string translatable="false" name="font_roboto_condensed">sans-serif-condensed</string>
+    <string translatable="false" name="font_roboto_black">sans-serif-black</string>
+    <string translatable="false" name="font_roboto_thin">sans-serif-thin</string>
+    <string translatable="false" name="font_roboto_medium">sans-serif-medium</string>
+
+    <string name="update_shop_fragment_name">Update Shop</string>
+
+    <string name="shop_menu_delete_shop">Delete</string>
+    <string name="shop_menu_edit_shop">Edit</string>
+    <string name="shop_message_shop_deleted">%1$s was deleted.</string>
+    <string name="shop_message_add_to_favorites">%1$s was added to favorites.</string>
+    <string name="shop_message_removed_from_favorites">%1$s was removed from favorites.</string>
+
+    <string name="home_fragment_name">Dashboard</string>
+    <string name="home_empty_dashboard">Shops, shopping, recipes and more.\nMore coming soon.</string>
+    <string name="home_description_heart_icon">Icon of a heart</string>
+    <string name="home_description_cake_icon">Icon of a cake</string>
+    <string name="home_description_basket_icon">Icon of a basket</string>
+    <string name="home_description_bakery_dining_icon">Icon of a bakery dining</string>
+    <string name="home_description_store_icon">Icon of a store</string>
 </resources>

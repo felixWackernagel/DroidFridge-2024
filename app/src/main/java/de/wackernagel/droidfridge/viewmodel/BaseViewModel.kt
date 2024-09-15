@@ -5,34 +5,46 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 abstract class BaseViewModel: ViewModel() {
-    val TAG = this::class.simpleName
-    val _navigateToList = MutableLiveData(false)
-    val navigateToList: LiveData<Boolean>
-        get() = _navigateToList
-    val _navigateToAddItem = MutableLiveData(false)
-    val navigateToAddItem: LiveData<Boolean>
-        get() = _navigateToAddItem
-    val _navigateToEditItem= MutableLiveData<Long?>()
-    val navigateToEditItem: LiveData<Long?>
-        get() = _navigateToEditItem
+    private val _navigateToList = MutableLiveData(false)
+    val navigateToList: LiveData<Boolean> = _navigateToList
 
-    val _insertSuccess = MutableLiveData<Boolean?>(null)
-    val insertSuccess: LiveData<Boolean?>
-        get() = _insertSuccess
-    protected val _doValidation = MutableLiveData<Boolean>(false)
-    val doValidation: LiveData<Boolean>
-        get() = _doValidation
+    private val _navigateToAddItem = MutableLiveData(false)
+    val navigateToAddItem: LiveData<Boolean>  = _navigateToAddItem
+
+    private val _navigateToEditItem= MutableLiveData<Long?>()
+    val navigateToEditItem: LiveData<Long?> = _navigateToEditItem
+
+    private val _navigateToDetailItem = MutableLiveData<Long?>()
+    val navigateToDetailItem: LiveData<Long?> = _navigateToDetailItem
+
+    protected val _insertSuccess = MutableLiveData<Boolean?>(null)
+    val insertSuccess: LiveData<Boolean?> = _insertSuccess
+
+    protected val _doValidation = MutableLiveData(false)
+    val doValidation: LiveData<Boolean> = _doValidation
 
     fun addItem() {
         _navigateToAddItem.value = true
+    }
+
+    fun editItem(itemId: Long) {
+        _navigateToEditItem.value = itemId
+    }
+
+    fun listItems() {
+        _navigateToList.value = true
     }
 
     fun onNavigatedToList() {
         _navigateToList.value = false
     }
 
-    fun onItemClicked(itemId: Long) {
-        _navigateToEditItem.value = itemId
+    fun showItemDetails(itemId: Long) {
+        _navigateToDetailItem.value = itemId
+    }
+
+    fun onShowItemDetailsNavigated() {
+        _navigateToDetailItem.value = null
     }
 
     fun onItemAddNavigated() {

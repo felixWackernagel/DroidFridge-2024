@@ -9,6 +9,10 @@ class ShopRepository @Inject constructor( private val shopSource: ShopLocalSourc
 
     val allShopsWithOpeningHours: LiveData<List<ShopWithOpeningHours>> = shopSource.getShopsWithOpeningHours()
 
+    fun getShopWithOpeningHours(shopId: Long): LiveData<ShopWithOpeningHours> {
+        return shopSource.getShopWithOpeningHours(shopId)
+    }
+
     fun get(shopId: Long): LiveData<Shop> {
         return shopSource.get(shopId)
     }

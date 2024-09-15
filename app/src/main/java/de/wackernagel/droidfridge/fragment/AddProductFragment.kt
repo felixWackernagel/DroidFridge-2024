@@ -55,7 +55,7 @@ class AddProductFragment : BaseFragment() {
             if (isSuccess != null && !isSuccess ) {
                 Snackbar.make(binding.crudButtons.actionButton,resources.getText(R.string.unique_product_violation),
                     Snackbar.LENGTH_INDEFINITE).show()
-                Log.d(TAG,"There was a problem when inserting product data to the database ...")
+                Log.d("AddProductFragment","There was a problem when inserting product data to the database ...")
             }
         })
         return view

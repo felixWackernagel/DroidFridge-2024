@@ -4,8 +4,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/homeFragment"
-            android:icon="@drawable/round_home_24"
-            android:title="@string/main_menu_title" />
+            android:icon="@drawable/ic_home_24"
+            android:title="@string/home_fragment_name" />
         <item
             android:id="@+id/productsListFragment"
             android:icon="@drawable/round_apps_24"

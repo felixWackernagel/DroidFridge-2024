@@ -84,7 +84,6 @@
                 android:layout_marginTop="16dp"
                 android:onClick="@{() -> viewModel.addShop()}"
                 android:text="@string/add_shop_button"
-                android:theme="@style/Theme.MyApplication"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/streetNameField" />
 

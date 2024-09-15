@@ -27,4 +27,8 @@ interface ShopDao {
     @Transaction
     @Query("SELECT * FROM shops")
     fun getShopsWithOpeningHours(): LiveData<List<ShopWithOpeningHours>>
+
+    @Transaction
+    @Query("SELECT * FROM shops WHERE id = :id")
+    fun getShopWithOpeningHours( id: Long): LiveData<ShopWithOpeningHours>
 }

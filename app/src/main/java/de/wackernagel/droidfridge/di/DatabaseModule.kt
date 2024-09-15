@@ -12,6 +12,8 @@ import de.wackernagel.droidfridge.dao.ShopDao
 import de.wackernagel.droidfridge.database.AppDatabase
 import de.wackernagel.droidfridge.database.ProductLocalSource
 import de.wackernagel.droidfridge.database.ProductRepository
+import de.wackernagel.droidfridge.database.ShopLocalSource
+import de.wackernagel.droidfridge.database.ShopRepository
 import javax.inject.Singleton
 
 @Module
@@ -53,5 +55,17 @@ class DatabaseModule {
     @Singleton
     fun provideProductRepository( productLocalSource: ProductLocalSource ): ProductRepository {
         return ProductRepository( productLocalSource )
+    }
+
+    @Provides
+    @Singleton
+    fun provideShopLocalSource( shopDao: ShopDao ): ShopLocalSource {
+        return ShopLocalSource( shopDao )
+    }
+
+    @Provides
+    @Singleton
+    fun provideShopRepository( shopLocalSource: ShopLocalSource ): ShopRepository {
+        return ShopRepository( shopLocalSource )
     }
 }

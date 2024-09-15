@@ -12,6 +12,10 @@ class ShopLocalSource @Inject constructor(private val shopDao: ShopDao) {
         return shopDao.getShopsWithOpeningHours()
     }
 
+    fun getShopWithOpeningHours( shopId: Long): LiveData<ShopWithOpeningHours> {
+        return shopDao.getShopWithOpeningHours(shopId)
+    }
+
     fun get(shopId: Long): LiveData<Shop> {
         return shopDao.get(shopId)
     }
