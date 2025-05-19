@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/deleteShop"
+        android:title="@string/update_shop_menu_delete_shop"
+        app:showAsAction="never" />
+</menu>

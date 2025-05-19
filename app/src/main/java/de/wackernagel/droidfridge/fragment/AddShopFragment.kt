@@ -5,30 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.wackernagel.droidfridge.R
-import de.wackernagel.droidfridge.data.Validation
 import de.wackernagel.droidfridge.databinding.FragmentAddShopBinding
 import de.wackernagel.droidfridge.ui.Result
 import de.wackernagel.droidfridge.ui.ShopValidator
-import de.wackernagel.droidfridge.ui.formfields.FormFieldText
-import de.wackernagel.droidfridge.ui.formfields.validate
 import de.wackernagel.droidfridge.viewmodel.AddShopViewModel
-import de.wackernagel.droidfridge.viewmodel.BaseViewModel
-import de.wackernagel.droidfridge.viewmodel.ShopViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -67,7 +58,7 @@ class AddShopFragment : BottomSheetDialogFragment() {
                         is Result.Error -> {
                             when (result.error) {
                                 ShopValidator.ShopError.NO_NAME -> {
-                                    binding.nameField.error = getString(R.string.validation_no_name)
+                                    binding.nameField.error = getString(R.string.add_shop_validation_name_required)
                                     binding.nameField.requestFocus()
                                 }
                             }
@@ -83,16 +74,6 @@ class AddShopFragment : BottomSheetDialogFragment() {
                     }
                     binding.saveButton.isEnabled = true
                 }
-            }
-        }
-
-        viewModel.insertSuccess.observe(viewLifecycleOwner) { isSuccess ->
-            if (isSuccess != null && !isSuccess) {
-                Snackbar.make(
-                    binding.saveButton,
-                    resources.getText(R.string.unique_product_violation),
-                    Snackbar.LENGTH_INDEFINITE
-                ).show()
             }
         }
 
@@ -114,6 +95,9 @@ class AddShopFragment : BottomSheetDialogFragment() {
                     when( event ) {
                         is AddShopViewModel.UiEvent.ShopCreated -> {
                             Toast.makeText( context, getString( R.string.add_shop_message_shop_created, event.shopName ), Toast.LENGTH_SHORT ).show()
+                        }
+                        is AddShopViewModel.UiEvent.ShopUpdateError -> {
+                            Toast.makeText( context, R.string.add_shop_message_insert_error, Toast.LENGTH_SHORT ).show()
                         }
                     }
                 }

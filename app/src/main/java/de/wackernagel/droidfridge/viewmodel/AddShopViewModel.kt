@@ -14,6 +14,7 @@ import javax.inject.Inject
 class AddShopViewModel @Inject constructor(private val shopRepository: ShopRepository) : BaseViewModel()  {
     sealed class UiEvent {
         data class ShopCreated(val shopName: String): UiEvent()
+        data object ShopUpdateError: UiEvent()
     }
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -32,7 +33,7 @@ class AddShopViewModel @Inject constructor(private val shopRepository: ShopRepos
                 _eventFlow.emit( UiEvent.ShopCreated( shopName = newShop.name ) )
                 listItems()
             } catch(sqlExc: SQLiteConstraintException) {
-                _insertSuccess.value = false
+                _eventFlow.emit( UiEvent.ShopUpdateError )
             }
         }
     }

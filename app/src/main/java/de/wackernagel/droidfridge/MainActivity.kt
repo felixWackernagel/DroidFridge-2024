@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
@@ -19,7 +20,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import de.wackernagel.droidfridge.databinding.ActivityMainBinding
-import de.wackernagel.droidfridge.ui.DisableAppBarLayoutBehavior
 
 
 @AndroidEntryPoint
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView( this, R.layout.activity_main )
-        DroidFridgeApplication.appCtx = applicationContext
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -49,12 +48,36 @@ class MainActivity : AppCompatActivity(), MenuProvider {
             showOrHideBottomNavigation( binding.bottomNavigation, arguments )
 
             // update toolbar
+            showCloseIconOnToolbar( binding.toolbar, destination.id )
             collapseOrExpandCollapsingToolbarLayout( destination.id, previousDestinationId, listOf( R.id.shopFragment), binding.appBar, binding.collapsingToolbar )
+            invalidateMenu()
 
             previousDestinationId = destination.id
         }
 
+        disableExpandableAndCollapsableAppBarByDragAndDrop( binding.appBar )
+
         addMenuProvider( this )
+    }
+
+    private fun disableExpandableAndCollapsableAppBarByDragAndDrop(appBar: AppBarLayout) {
+        val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
+        val behaviour = params.behavior as AppBarLayout.Behavior
+        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                return false
+            }
+        })
+    }
+
+    /**
+     * Show a X icon instead of a arrow icon on the toolbar.
+     * Do this only for some special destinations.
+     * It is not required to undo this action because it is done automatically.
+     */
+    private fun showCloseIconOnToolbar(toolbar: Toolbar, destinationId: Int) {
+        val showCloseIconFor = listOf( R.id.updateShopFragment )
+        if( showCloseIconFor.contains( destinationId ) ) toolbar.setNavigationIcon( R.drawable.ic_close_24 )
     }
 
     /**
@@ -78,10 +101,6 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         collapsingToolbar.scrimAnimationDuration = if( expandToolbar ) 600 else 0
 
         appBar.setExpanded( expandToolbar, expandToolbar || collapseToolbar )
-
-        val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior as DisableAppBarLayoutBehavior?
-        behavior?.setEnabled( expandToolbar )
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -90,10 +109,12 @@ class MainActivity : AppCompatActivity(), MenuProvider {
 
     override fun onPrepareMenu(menu: Menu) {
         val fragmentId = navController.currentDestination?.id
-        menu.findItem( R.id.aboutFragment )?.isVisible = R.id.aboutFragment != fragmentId
+        val hideAboutMenuFor = listOf( R.id.aboutFragment, R.id.updateShopFragment )
+        menu.findItem( R.id.aboutFragment )?.isVisible = !hideAboutMenuFor.contains( fragmentId )
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        // add all menu-item ids which are no navigation destinations to avoid unnecessary log warnings
         return when( menuItem.itemId ) {
             R.id.editShop -> false
             R.id.deleteShop -> false

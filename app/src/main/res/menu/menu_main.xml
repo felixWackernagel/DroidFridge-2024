@@ -7,11 +7,6 @@
             android:icon="@drawable/ic_home_24"
             android:title="@string/home_fragment_name" />
         <item
-            android:id="@+id/productsListFragment"
-            android:icon="@drawable/round_apps_24"
-            android:visible="false"
-            android:title="@string/products_list_menu_title" />
-        <item
             android:id="@+id/shopsListFragment"
             android:icon="@drawable/ic_store_24"
             android:title="@string/shops_list_menu_title" />

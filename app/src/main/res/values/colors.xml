@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ic_launcher_background">#FFC107</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
@@ -19,7 +21,6 @@
     <color name="secondary200">#ffca7f</color>
     <color name="secondary700">#f57902</color>
 
-    <color name="dividerColor">#44000000</color>
     <color name="text_primary_on_light">#1D1B20</color>
     <color name="text_secondary_on_light">#49454F</color>
     <color name="black_title_color">#8A000000</color>
@@ -27,4 +28,8 @@
     <color name="shop_open">#1B5E20</color>
     <color name="shop_closed">#B71C1C</color>
     <color name="shop_last_hour">#F57F17</color>
+
+    <color name="divider">#CAC4D0</color>
+
+    <color name="list_item_leading_icon">#49454F</color>
 </resources>

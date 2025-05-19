@@ -19,7 +19,7 @@
                 android:id="@+id/image"
                 android:layout_height="56dp"
                 android:layout_width="56dp"
-                android:contentDescription="@string/shop_item_image_description"
+                android:contentDescription="@string/shop_list_item_description_image"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/shop_list_item_default"
                 app:shapeAppearanceOverlay="@style/ImageView.Rounded"
@@ -48,7 +48,7 @@
                     android:textColor="@color/text_primary_on_light"
                     android:textSize="16sp"
                     android:lineSpacingExtra="8sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@string/font_roboto_medium"
                     android:textFontWeight="400"
                     tools:text="LIDL" />
 
@@ -81,10 +81,10 @@
                 android:paddingEnd="0dp"
                 app:openingState="@{shopWithOpeningHours}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/shop_details"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="@string/shop_open" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="@string/shop_list_item_state_open" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

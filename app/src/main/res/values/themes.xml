@@ -17,4 +17,18 @@
 
     <style name="Theme.DroidFridge" parent="Base.Theme.DroidFridge" />
 
+    <style name="Base.Theme.Licenses" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/primary900</item>
+        <item name="colorPrimaryVariant">@color/primary900</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary200</item>
+        <item name="colorSecondaryVariant">@color/secondary700</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Theme.Licenses" parent="Base.Theme.Licenses" />
+
 </resources>

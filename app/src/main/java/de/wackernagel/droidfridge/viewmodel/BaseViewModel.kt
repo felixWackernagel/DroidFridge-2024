@@ -17,9 +17,6 @@ abstract class BaseViewModel: ViewModel() {
     private val _navigateToDetailItem = MutableLiveData<Long?>()
     val navigateToDetailItem: LiveData<Long?> = _navigateToDetailItem
 
-    protected val _insertSuccess = MutableLiveData<Boolean?>(null)
-    val insertSuccess: LiveData<Boolean?> = _insertSuccess
-
     protected val _doValidation = MutableLiveData(false)
     val doValidation: LiveData<Boolean> = _doValidation
 

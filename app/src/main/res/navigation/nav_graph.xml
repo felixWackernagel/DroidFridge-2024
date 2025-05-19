@@ -3,14 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
         android:name="de.wackernagel.droidfridge.fragment.HomeFragment"
         android:label="@string/home_fragment_name">
-        <action
-            android:id="@+id/action_homeFragment_to_productsListFragment"
-            app:destination="@id/productsListFragment" />
         <action
             android:id="@+id/action_homeFragment_to_shopsListFragment"
             app:destination="@id/shopsListFragment" />
@@ -18,25 +14,10 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="de.wackernagel.droidfridge.fragment.AboutFragment"
-        android:label="@string/about_menu_title">
+        android:label="@string/about_fragment_name">
         <argument
-            android:name="ShowBottomNavigation"
+            android:name="showBottomNavigation"
             android:defaultValue="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/productsListFragment"
-        android:name="de.wackernagel.droidfridge.fragment.ProductsListFragment"
-        android:label="@string/products_list_fragment_label">
-
-        <action
-            android:id="@+id/action_productsListFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_productsListFragment_to_addProductFragment"
-            app:destination="@id/addProductFragment" />
-        <action
-            android:id="@+id/action_productsListFragment_to_updateProductFragment"
-            app:destination="@id/updateProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopsListFragment"
@@ -80,38 +61,20 @@
             android:defaultValue="false" />
     </fragment>
     <fragment
-        android:id="@+id/addProductFragment"
-        android:name="de.wackernagel.droidfridge.fragment.AddProductFragment"
-        android:label="@string/add_product_fragment_label" >
-
-        <action
-            android:id="@+id/action_addProductFragment_to_productsListFragment"
-            app:destination="@id/productsListFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/updateShopFragment"
         android:name="de.wackernagel.droidfridge.fragment.UpdateShopFragment"
-        android:label="@string/update_shop_fragment_name" >
+        android:label="@string/update_shop_fragment_name">
         <action
             android:id="@+id/action_updateShopFragment_to_shopFragment"
-            app:destination="@id/shopFragment"
-            app:popUpTo="@id/homeFragment" />
+            app:popUpTo="@id/shopFragment" />
+        <action
+            android:id="@+id/action_updateShopFragment_to_shopsListFragment"
+            app:popUpTo="@id/shopsListFragment" />
         <argument
             android:name="shopId"
             app:argType="long" />
         <argument
-            android:name="ShowBottomNavigation"
+            android:name="showBottomNavigation"
             android:defaultValue="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/updateProductFragment"
-        android:name="de.wackernagel.droidfridge.fragment.UpdateProductFragment"
-        android:label="@string/product_update_menu_title" >
-        <action
-            android:id="@+id/action_updateProductFragment_to_productsListFragment"
-            app:destination="@id/productsListFragment" />
-        <argument
-            android:name="productId"
-            app:argType="long" />
     </fragment>
 </navigation>

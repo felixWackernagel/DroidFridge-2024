@@ -1,10 +1,7 @@
 package de.wackernagel.droidfridge.viewmodel
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
@@ -13,11 +10,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.wackernagel.droidfridge.data.Shop
 import de.wackernagel.droidfridge.database.ShopRepository
 import de.wackernagel.droidfridge.di.ShopViewModelFactory
+import de.wackernagel.droidfridge.ui.Helpers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.StringJoiner
 
 @HiltViewModel(assistedFactory = ShopViewModelFactory::class)
 class ShopViewModel @AssistedInject constructor(
@@ -37,29 +36,20 @@ class ShopViewModel @AssistedInject constructor(
 
     fun openMap( view: View, shop: Shop ) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("geo:0,0?q=${shop.street}  ${shop.streetNumber}, ${shop.postalCode} ${shop.city}, ${shop.country}")
+            val joiner = StringJoiner(" ")
+            listOf( shop.street, shop.streetNumber, shop.postalCode, shop.city, shop.country )
+                .filter { !it.isNullOrEmpty() }
+                .forEach( joiner::add )
+            data = Uri.parse("geo:0,0?q=${joiner}")
         }
-        startWhenAvailable( view.context, intent )
+        Helpers.startIntentWhenAvailable( view.context, intent )
     }
 
     fun dialPhoneNumber( view: View, shop: Shop ) {
         val intent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:${shop.phone}")
         }
-        startWhenAvailable( view.context, intent )
-    }
-
-    private fun startWhenAvailable(context: Context, intent: Intent ) {
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ) {
-            if( context.packageManager.queryIntentActivities( intent, PackageManager.ResolveInfoFlags.of( PackageManager.MATCH_DEFAULT_ONLY.toLong() ) ).isNotEmpty() ) {
-                context.startActivity(intent)
-            }
-        }
-        else {
-            if( context.packageManager.queryIntentActivities( intent, PackageManager.MATCH_DEFAULT_ONLY ).isNotEmpty() ) {
-                context.startActivity(intent)
-            }
-        }
+        Helpers.startIntentWhenAvailable( view.context, intent )
     }
 
     fun toggleFavoriteShop() = viewModelScope.launch {

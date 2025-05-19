@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +33,9 @@ class ShopsListFragment : BaseFragment() {
         }
         binding.shopsList.adapter = adapter
         binding.shopsList.layoutManager = GridLayoutManager( context, resources.getInteger( R.integer.grid_column_count ) )
+
+        // avoid to expand or collapse CollapsingToolbarLayout by scrolling the RecyclerView
+        ViewCompat.setNestedScrollingEnabled( binding.shopsList, false )
 
         viewModel.shops.observe(viewLifecycleOwner) {
             it?.let {

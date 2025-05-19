@@ -20,6 +20,10 @@ data class Shop (
     var city: String? = null,
     @ColumnInfo(name = "country")
     var country: String? = null,
+    @ColumnInfo(name = "latitude")
+    var latitude: Long? = null,
+    @ColumnInfo(name = "longitude")
+    var longitude: Long? = null,
     @ColumnInfo(name = "phone")
     var phone: String? = null,
     @ColumnInfo(name = "image_path")
@@ -27,5 +31,7 @@ data class Shop (
     @ColumnInfo(name = "is_favorite", defaultValue = "0")
     var isFavorite: Boolean = false,
     @ColumnInfo(name = "details")
-    var details: String? = null
+    var details: String? = null,
+    @ColumnInfo(name = "category")
+    var category: String? = null
 )

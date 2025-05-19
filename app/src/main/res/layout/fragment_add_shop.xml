@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/add_shop_field_streetname"
+                android:hint="@string/add_shop_field_street"
                 app:startIconDrawable="@drawable/ic_location_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameField"

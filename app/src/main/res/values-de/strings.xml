@@ -2,40 +2,28 @@
     <string name="app_name">DroidFridge</string>
 
     <string name="main_description_favorite_fab">Als Favorit markieren</string>
+    <string name="main_description_toolbar_image">Hero Bild</string>
+    <string name="main_description_add_fab">Neues Element anlegen</string>
+    <string name="main_menu_about">Über DroidFridge</string>
 
-    <string name="products_list_fragment_label">Produkte</string>
-    <string name="add_product_fragment_label">Produkt hinzufügen</string>
-    <string name="add_shop_fragment_name">Geschäft hinzufügen</string>
-
-    <string name="products_list_menu_title">Produkte</string>
-    <string name="fab_add_description">Neues Element anlegen</string>
-    <string name="fab_filter_description">Filter</string>
-    <string name="fab_csv_description">Import/Export</string>
-    <string name="about_menu_title">Über DroidFridge</string>
-
-    <string name="name_label">Name</string>
-    <string name="save_button">Speichern</string>
-    <string name="delete_button">Löschen</string>
-    <string name="update_button">Aktualisieren</string>
-    <string name="unique_product_violation">Ein Produkt mit dem Namen existiert bereits!</string>
-    <string name="validation_no_name">Name ist ein Pflichtfeld</string>
-    <string name="product_update_menu_title">Produkt bearbeiten</string>
     <string name="shops_list_menu_title">Geschäfte</string>
     <string name="shops_list_fragment_label">Geschäfte</string>
-    <string name="shop_item_image_description">Bild vom Geschäft</string>
-    <string name="shop_open">geöffnet</string>
-    <string name="shop_closed">geschlossen</string>
-    <string name="shop_last_hour">schließt demnächst</string>
 
+    <string name="shop_list_item_description_image">Bild vom Geschäft</string>
+    <string name="shop_list_item_state_open">geöffnet</string>
+    <string name="shop_list_item_state_closed">geschlossen</string>
+    <string name="shop_list_item_state_last_hour">schließt demnächst</string>
+
+    <string name="add_shop_fragment_name">Geschäft hinzufügen</string>
     <string name="add_shop_title">Neues Geschäft</string>
     <string name="add_shop_field_name">Name</string>
-    <string name="add_shop_field_streetname">Straße (optional)</string>
+    <string name="add_shop_field_street">Straße (optional)</string>
     <string name="add_shop_button">Speichern</string>
     <string name="add_shop_message_shop_created">%1$s wurde hinzugefügt.</string>
+    <string name="add_shop_message_insert_error">Ein Fehler ist beim speichern passiert.</string>
+    <string name="add_shop_validation_name_required">Name ist ein Pflichtfeld</string>
 
-    <string name="shop_fragment_name">Geschäft</string>
-    <string name="main_description_toolbar_image">Hero Bild</string>
-    <string name="update_shop_fragment_name">Geschäft bearbeiten</string>
+    <string name="shop_fragment_name">\u0020</string>
     <string name="shop_menu_delete_shop">Löschen</string>
     <string name="shop_menu_edit_shop">Bearbeiten</string>
     <string name="shop_message_shop_deleted">%1$s wurde gelöscht.</string>
@@ -49,4 +37,31 @@
     <string name="home_description_basket_icon">Icon von einem Einkaufskorb</string>
     <string name="home_description_bakery_dining_icon">Icon von Backwaren</string>
     <string name="home_description_store_icon">Icon eines Geschäftes</string>
+
+    <string name="update_shop_fragment_name">Geschäft bearbeiten</string>
+    <string name="update_shop_menu_delete_shop">Löschen</string>
+    <string name="update_shop_message_shop_updated">%1$s wurde gespeichert.</string>
+    <string name="update_shop_message_shop_deleted">%1$s wurde gelöscht.</string>
+    <string name="update_shop_message_update_error">Ein Fehler ist beim speichern passiert.</string>
+    <string name="update_shop_description_shop_icon">Kleines Icon von einem Geschäft.</string>
+    <string name="update_shop_description_location_icon">Kleines Icon von einer Kartenmarkierung.</string>
+    <string name="update_shop_description_phone_icon">Kleines Icon von einem Telefon.</string>
+    <string name="update_shop_description_details_icon">Kleines Icon von einem Notizzettel.</string>
+    <string name="update_shop_field_name">Name</string>
+    <string name="update_shop_field_street">Straße</string>
+    <string name="update_shop_field_street_number">Nr.</string>
+    <string name="update_shop_field_postal_code">PLZ</string>
+    <string name="update_shop_field_city">Ort</string>
+    <string name="update_shop_field_country">Land</string>
+    <string name="update_shop_field_phone">Telefon</string>
+    <string name="update_shop_field_details">Details</string>
+    <string name="update_shop_button_save">Speichern</string>
+    <string name="update_shop_validation_name_required">Name ist ein Pflichtfeld.</string>
+
+    <string name="licenses_activity_name">Open-Source-Lizenzen</string>
+
+    <string name="about_fragment_name">Über DroidFridge</string>
+    <string name="about_description_app_logo">DroidFridge App Logo</string>
+    <string name="about_app_version">Version %1$s</string>
+    <string name="about_data_protection">Datenschutzerklärung</string>
 </resources>

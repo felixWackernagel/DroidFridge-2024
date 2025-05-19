@@ -110,6 +110,14 @@ class ShopFragment : BaseFragment(), MenuProvider {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        activateFavoriteFAB(
+            { viewModel.toggleFavoriteShop() },
+            viewModel.shop.value?.shop?.isFavorite ?: false
+        )
+    }
+
     override fun onPause() {
         super.onPause()
         deactivateFavoriteFAB()

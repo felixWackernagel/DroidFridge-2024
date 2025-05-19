@@ -1,41 +1,4 @@
 <resources>
-    <string name="app_name">DroidFridge</string>
-
-    <string name="main_description_favorite_fab">Mark as favorite</string>
-    <string name="main_description_toolbar_image">Hero image</string>
-
-    <string name="products_list_fragment_label">Products</string>
-    <string name="add_product_fragment_label">Add Product</string>
-
-    <string name="products_list_menu_title">Products</string>
-    <string name="fab_add_description">Add new element</string>
-    <string name="fab_filter_description">Filter options</string>
-    <string name="fab_csv_description">Import/Export</string>
-    <string name="about_menu_title">About DroidFridge</string>
-
-    <string name="name_label">Name</string>
-    <string name="save_button">Save</string>
-    <string name="delete_button">Delete</string>
-    <string name="update_button">Update</string>
-    <string name="unique_product_violation">This Product name already exists!</string>
-    <string name="validation_no_name">Name is required</string>
-    <string name="product_update_menu_title">Update Product</string>
-    <string name="shops_list_menu_title">Shops</string>
-    <string name="shops_list_fragment_label">Shops</string>
-    <string name="shop_item_image_description">Image of the Shop</string>
-    <string name="shop_open">open</string>
-    <string name="shop_closed">closed</string>
-    <string name="shop_last_hour">closes soon</string>
-
-    <string name="add_shop_fragment_name">Add Shop</string>
-    <string name="add_shop_title">New Shop</string>
-    <string name="add_shop_field_name">Name</string>
-    <string name="add_shop_field_streetname">Street (optional)</string>
-    <string name="add_shop_button">Save</string>
-    <string name="add_shop_message_shop_created">%1$s was created.</string>
-
-    <string name="shop_fragment_name">Shop</string>
-
     <string translatable="false" name="font_roboto_regular">sans-serif</string>
     <string translatable="false" name="font_roboto_light">sans-serif-light</string>
     <string translatable="false" name="font_roboto_condensed">sans-serif-condensed</string>
@@ -43,8 +6,31 @@
     <string translatable="false" name="font_roboto_thin">sans-serif-thin</string>
     <string translatable="false" name="font_roboto_medium">sans-serif-medium</string>
 
-    <string name="update_shop_fragment_name">Update Shop</string>
+    <string name="app_name">DroidFridge</string>
 
+    <string name="main_description_favorite_fab">Mark as favorite</string>
+    <string name="main_description_toolbar_image">Hero image</string>
+    <string name="main_description_add_fab">Add new element</string>
+    <string name="main_menu_about">About DroidFridge</string>
+
+    <string name="shops_list_menu_title">Shops</string>
+    <string name="shops_list_fragment_label">Shops</string>
+
+    <string name="shop_list_item_description_image">Image of the Shop</string>
+    <string name="shop_list_item_state_open">open</string>
+    <string name="shop_list_item_state_closed">closed</string>
+    <string name="shop_list_item_state_last_hour">closes soon</string>
+
+    <string name="add_shop_fragment_name">Add Shop</string>
+    <string name="add_shop_title">New Shop</string>
+    <string name="add_shop_field_name">Name</string>
+    <string name="add_shop_field_street">Street (optional)</string>
+    <string name="add_shop_button">Save</string>
+    <string name="add_shop_message_shop_created">%1$s was created.</string>
+    <string name="add_shop_message_insert_error">An error occurred during save.</string>
+    <string name="add_shop_validation_name_required">Name is required</string>
+
+    <string name="shop_fragment_name">\u0020</string>
     <string name="shop_menu_delete_shop">Delete</string>
     <string name="shop_menu_edit_shop">Edit</string>
     <string name="shop_message_shop_deleted">%1$s was deleted.</string>
@@ -58,4 +44,31 @@
     <string name="home_description_basket_icon">Icon of a basket</string>
     <string name="home_description_bakery_dining_icon">Icon of a bakery dining</string>
     <string name="home_description_store_icon">Icon of a store</string>
+
+    <string name="update_shop_fragment_name">Update Shop</string>
+    <string name="update_shop_menu_delete_shop">Delete</string>
+    <string name="update_shop_message_shop_updated">%1$s was saved.</string>
+    <string name="update_shop_message_shop_deleted">%1$s was deleted.</string>
+    <string name="update_shop_message_update_error">An error occurred during update.</string>
+    <string name="update_shop_description_shop_icon">Small icon of a store.</string>
+    <string name="update_shop_description_location_icon">Small icon of a map marker.</string>
+    <string name="update_shop_description_phone_icon">Small icon of a phone.</string>
+    <string name="update_shop_description_details_icon">Small icon of a notes.</string>
+    <string name="update_shop_field_name">Name</string>
+    <string name="update_shop_field_street">Street</string>
+    <string name="update_shop_field_street_number">No.</string>
+    <string name="update_shop_field_postal_code">Zip</string>
+    <string name="update_shop_field_city">City</string>
+    <string name="update_shop_field_country">Country</string>
+    <string name="update_shop_field_phone">Phone</string>
+    <string name="update_shop_field_details">Details</string>
+    <string name="update_shop_button_save">Save</string>
+    <string name="update_shop_validation_name_required">Name is required</string>
+
+    <string name="licenses_activity_name">Open-Source-Licenses</string>
+
+    <string name="about_fragment_name">About DroidFridge</string>
+    <string name="about_description_app_logo">DroidFridge App Logo</string>
+    <string name="about_app_version">Version %1$s</string>
+    <string name="about_data_protection">Data Protection</string>
 </resources>

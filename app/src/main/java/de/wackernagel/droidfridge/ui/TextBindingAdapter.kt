@@ -16,13 +16,13 @@ fun TextView.setOpeningState( shopWithOpeningHours: ShopWithOpeningHours) {
     if( shopWithOpeningHours.openingHours.isNotEmpty() ) {
         visibility = View.VISIBLE
         if( shopWithOpeningHours.isClosedSoon() ) {
-            text = context.getString( R.string.shop_last_hour )
+            text = context.getString( R.string.shop_list_item_state_last_hour )
             setTextColor( ContextCompat.getColor( context, R.color.shop_last_hour ) )
         } else if( shopWithOpeningHours.isOpen() ) {
-            text = context.getString( R.string.shop_open )
+            text = context.getString( R.string.shop_list_item_state_open )
             setTextColor( ContextCompat.getColor( context, R.color.shop_open ) )
         } else {
-            text = context.getString( R.string.shop_closed )
+            text = context.getString( R.string.shop_list_item_state_closed )
             setTextColor( ContextCompat.getColor( context, R.color.shop_closed ) )
         }
     } else {
@@ -32,7 +32,7 @@ fun TextView.setOpeningState( shopWithOpeningHours: ShopWithOpeningHours) {
 
 @BindingAdapter("goneUnless")
 fun goneUnless( view: View, value: String? ) {
-    view.visibility = if (value != null) View.VISIBLE else View.GONE
+    view.visibility = if (!value.isNullOrBlank()) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("shopAddress")
