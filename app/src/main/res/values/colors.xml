@@ -32,4 +32,5 @@
     <color name="divider">#CAC4D0</color>
 
     <color name="list_item_leading_icon">#49454F</color>
+    <color name="list_item_background">#DADCE0</color>
 </resources>
