@@ -2,17 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.android.room)
-    id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-kapt")
-    id("com.google.android.gms.oss-licenses-plugin")
+    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.google.oss.licenses)
 }
 
 android {
     namespace = "de.wackernagel.droidfridge"
-    compileSdk = 35
+    compileSdk = 36
 
     room {
         schemaDirectory("$projectDir/schemas")
@@ -21,7 +19,7 @@ android {
     defaultConfig {
         applicationId = "de.wackernagel.droidfridge"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 2
         versionName = "1.1"
 
@@ -39,14 +37,15 @@ android {
         }
     }
 
-    // enabled JAVA 8 features
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+    kotlin {
+        jvmToolchain(17)
     }
+
     buildFeatures {
         viewBinding = true
         dataBinding = true
@@ -57,9 +56,11 @@ android {
 dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
     implementation(libs.android.room)
     implementation(libs.android.room.runtime)
     ksp(libs.android.room.compiler)
+
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.android.coroutines)
@@ -73,9 +74,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.play.services.oss.licenses)
-}
-
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
 }
