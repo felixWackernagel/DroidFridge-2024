@@ -24,10 +24,13 @@ class ShopsListFragment : BaseFragment() {
     private val viewModel by viewModels<ShopsListViewModel>()
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentShopsListBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val adapter = ShopsListAdapter { shopId ->
             viewModel.showItemDetails(shopId)
         }
@@ -58,8 +61,6 @@ class ShopsListFragment : BaseFragment() {
                 viewModel.onShowItemDetailsNavigated()
             }
         }
-
-        return binding.root
     }
 
     override fun onResume() {
