@@ -1,8 +1,8 @@
 package de.wackernagel.droidfridge.viewmodel
 
+import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -34,22 +34,22 @@ class ShopViewModel @AssistedInject constructor(
 
     val shop = shopRepository.getShopWithOpeningHours( shopId )
 
-    fun openMap( view: View, shop: Shop ) {
+    fun openMap(context: Context, shop: Shop ) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             val joiner = StringJoiner(" ")
             listOf( shop.street, shop.streetNumber, shop.postalCode, shop.city, shop.country )
                 .filter { !it.isNullOrEmpty() }
                 .forEach( joiner::add )
-            data = Uri.parse("geo:0,0?q=${joiner}")
+            data = "geo:0,0?q=${joiner}".toUri()
         }
-        Helpers.startIntentWhenAvailable( view.context, intent )
+        Helpers.startIntentWhenAvailable( context, intent )
     }
 
-    fun dialPhoneNumber( view: View, shop: Shop ) {
+    fun dialPhoneNumber( context: Context, shop: Shop ) {
         val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:${shop.phone}")
+            data = "tel:${shop.phone}".toUri()
         }
-        Helpers.startIntentWhenAvailable( view.context, intent )
+        Helpers.startIntentWhenAvailable( context, intent )
     }
 
     fun toggleFavoriteShop() = viewModelScope.launch {

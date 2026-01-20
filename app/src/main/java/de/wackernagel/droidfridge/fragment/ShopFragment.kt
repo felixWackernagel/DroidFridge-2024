@@ -1,6 +1,7 @@
 package de.wackernagel.droidfridge.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
 import de.wackernagel.droidfridge.R
+import de.wackernagel.droidfridge.data.Shop
 import de.wackernagel.droidfridge.databinding.FragmentShopBinding
 import de.wackernagel.droidfridge.di.ShopViewModelFactory
 import de.wackernagel.droidfridge.viewmodel.ShopViewModel
@@ -39,34 +42,6 @@ class ShopFragment : BaseFragment(), MenuProvider {
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _binding = FragmentShopBinding.inflate( inflater, container, false )
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.shop.observe( viewLifecycleOwner ) { shopWithOpeningHours ->
-            shopWithOpeningHours?.let {
-                binding.shopWithOpeningHours = it
-
-                activateFavoriteFAB(
-                    { viewModel.toggleFavoriteShop() },
-                    it.shop.isFavorite
-                )
-            }
-        }
-
-        viewModel.navigateToEditItem.observe(viewLifecycleOwner) { shopId ->
-            shopId?.let {
-                val toUpdateShop = ShopFragmentDirections.actionShopFragmentToUpdateShopFragment( shopId )
-                findNavController().navigate( toUpdateShop )
-                viewModel.onItemEditNavigated()
-            }
-        }
-        viewModel.navigateToList.observe(viewLifecycleOwner) { navigateToListItems ->
-            if( navigateToListItems ) {
-                findNavController().navigate( ShopFragmentDirections.actionShopFragmentToShopsListFragment() )
-                viewModel.onNavigatedToList()
-            }
-        }
-
         return binding.root
     }
 
@@ -88,6 +63,49 @@ class ShopFragment : BaseFragment(), MenuProvider {
                         }
                     }
                 }
+            }
+        }
+
+        viewModel.shop.observe( viewLifecycleOwner ) { shopWithOpeningHours ->
+            val shop = shopWithOpeningHours.shop
+
+            binding.shopName.text = shop.name
+            binding.shopAddress.text = shop.street
+            binding.shopPhone.text = shop.phone
+            binding.shopDetails.text = shop.details
+
+            binding.shopPhone.isVisible = !shop.phone.isNullOrBlank()
+            binding.shopDetails.isVisible = !shop.details.isNullOrBlank()
+
+            binding.shopAddress.setOnClickListener {
+                viewModel.openMap( view.context, shop )
+            }
+
+            binding.shopPhone.setOnClickListener {
+                viewModel.dialPhoneNumber(view.context, shop)
+            }
+
+            val address = buildAddress(shop)
+            binding.shopAddress.text = address
+            binding.shopAddress.isVisible = address.isNotEmpty()
+
+            activateFavoriteFAB(
+                { viewModel.toggleFavoriteShop() },
+                shop.isFavorite
+            )
+        }
+
+        viewModel.navigateToEditItem.observe(viewLifecycleOwner) { shopId ->
+            shopId?.let {
+                val toUpdateShop = ShopFragmentDirections.actionShopFragmentToUpdateShopFragment( shopId )
+                findNavController().navigate( toUpdateShop )
+                viewModel.onItemEditNavigated()
+            }
+        }
+        viewModel.navigateToList.observe(viewLifecycleOwner) { navigateToListItems ->
+            if( navigateToListItems ) {
+                findNavController().navigate( ShopFragmentDirections.actionShopFragmentToShopsListFragment() )
+                viewModel.onNavigatedToList()
             }
         }
     }
@@ -126,5 +144,28 @@ class ShopFragment : BaseFragment(), MenuProvider {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun buildAddress( shop: Shop ): String {
+        val line1 = StringBuilder()
+        if( !TextUtils.isEmpty( shop.street ) ) line1.append( shop.street )
+        if( !TextUtils.isEmpty( shop.streetNumber ) ) {
+            if( line1.isNotEmpty() ) line1.append( " " )
+            line1.append( shop.streetNumber )
+        }
+        val line2 = StringBuilder()
+        if( !TextUtils.isEmpty( shop.postalCode ) ) line2.append( shop.postalCode )
+        if( !TextUtils.isEmpty( shop.city ) ) {
+            if( line2.isNotEmpty() ) line2.append( " " )
+            line2.append( shop.city )
+        }
+        val address = StringBuilder()
+        if( line1.isNotEmpty() ) address.append( line1.toString() )
+        if( line1.isNotEmpty() && line2.isNotEmpty() ) address.append( "\n" )
+        if( line2.isNotEmpty() ) address.append( line2.toString() )
+        if( address.isNotEmpty() && !TextUtils.isEmpty( shop.country ) ) address.append( "\n" )
+        if( !TextUtils.isEmpty( shop.country ) ) address.append( shop.country )
+
+        return address.toString()
     }
 }
