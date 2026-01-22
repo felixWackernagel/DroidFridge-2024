@@ -12,6 +12,7 @@ import de.wackernagel.droidfridge.BuildConfig
 import de.wackernagel.droidfridge.R
 import de.wackernagel.droidfridge.databinding.FragmentAboutBinding
 import de.wackernagel.droidfridge.ui.Helpers
+import androidx.core.net.toUri
 
 class AboutFragment : Fragment() {
     private var _binding: FragmentAboutBinding? = null
@@ -23,6 +24,10 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutBinding.inflate( inflater, container, false )
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.appVersion.text = getString( R.string.about_app_version, BuildConfig.VERSION_NAME )
         binding.openSourceLicenses.setOnClickListener {
             OssLicensesMenuActivity.setActivityTitle( getString( R.string.licenses_activity_name ) )
@@ -30,12 +35,11 @@ class AboutFragment : Fragment() {
         }
         binding.dataProtection.setOnClickListener {
             it?.let {
-                val webpage: Uri = Uri.parse("https://www.felixwackernagel.de/droidfridge/datenschutz")
+                val webpage: Uri = "https://www.felixwackernagel.de/droidfridge/datenschutz".toUri()
                 val intent = Intent(Intent.ACTION_VIEW, webpage)
                 Helpers.startIntentWhenAvailable( it.context, intent )
             }
         }
-        return binding.root
     }
 
     override fun onDestroyView() {
