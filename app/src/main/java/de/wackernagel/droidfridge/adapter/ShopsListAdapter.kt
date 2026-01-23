@@ -1,11 +1,16 @@
 package de.wackernagel.droidfridge.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import de.wackernagel.droidfridge.R
 import de.wackernagel.droidfridge.data.ShopWithOpeningHours
+import de.wackernagel.droidfridge.data.isClosedSoon
+import de.wackernagel.droidfridge.data.isOpen
 import de.wackernagel.droidfridge.databinding.ShopListItemBinding
 
 class ShopsListAdapter( private val clickListener: (shopId: Long) -> Unit ):
@@ -30,9 +35,31 @@ class ShopsListAdapter( private val clickListener: (shopId: Long) -> Unit ):
         }
 
         fun bind(item: ShopWithOpeningHours, clickListener: (vaccinationTypeId: Long) -> Unit) {
-            binding.shopWithOpeningHours = item
             binding.root.setOnClickListener {
                 clickListener(item.shop.id)
+            }
+            binding.shopName.text = item.shop.name
+            binding.shopAddress.text = item.shop.street
+
+            binding.shopAddress.visibility =
+                if (item.shop.street.isNullOrBlank()) View.GONE else View.VISIBLE
+
+            binding.shopOpeningHours.apply {
+                if( item.openingHours.isNotEmpty() ) {
+                    visibility = View.VISIBLE
+                    if( item.isClosedSoon() ) {
+                        text = context.getString( R.string.shop_list_item_state_last_hour )
+                        setTextColor( ContextCompat.getColor(context, R.color.shop_last_hour ) )
+                    } else if( item.isOpen() ) {
+                        text = context.getString( R.string.shop_list_item_state_open )
+                        setTextColor( ContextCompat.getColor(context, R.color.shop_open ) )
+                    } else {
+                        text = context.getString( R.string.shop_list_item_state_closed )
+                        setTextColor( ContextCompat.getColor(context, R.color.shop_closed ) )
+                    }
+                } else {
+                    visibility = View.GONE
+                }
             }
         }
     }
