@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -38,9 +39,24 @@ class AddShopFragment : BottomSheetDialogFragment() {
     ): View {
         val themedInflater =  inflater.cloneInContext( ContextThemeWrapper( requireActivity(), R.style.Theme_DroidFridge ) )
         _binding = FragmentAddShopBinding.inflate(themedInflater, container, false)
+        return binding.root
+    }
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycleScope.launch {
+            repeatOnLifecycle( Lifecycle.State.STARTED ) {
+                viewModel.eventFlow.collectLatest { event ->
+                    when( event ) {
+                        is AddShopViewModel.UiEvent.ShopCreated -> {
+                            Toast.makeText( context, getString( R.string.add_shop_message_shop_created, event.shopName ), Toast.LENGTH_SHORT ).show()
+                        }
+                        is AddShopViewModel.UiEvent.ShopUpdateError -> {
+                            Toast.makeText( context, R.string.add_shop_message_insert_error, Toast.LENGTH_SHORT ).show()
+                        }
+                    }
+                }
+            }
+        }
 
         viewModel.navigateToList.observe(viewLifecycleOwner) { navigate ->
             if (navigate) {
@@ -85,23 +101,16 @@ class AddShopFragment : BottomSheetDialogFragment() {
             return@OnEditorActionListener false
         })
 
-        return binding.root
-    }
+        binding.nameFieldInput.doAfterTextChanged {
+            viewModel.newShop.name = it.toString()
+        }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycleScope.launch {
-            repeatOnLifecycle( Lifecycle.State.STARTED ) {
-                viewModel.eventFlow.collectLatest { event ->
-                    when( event ) {
-                        is AddShopViewModel.UiEvent.ShopCreated -> {
-                            Toast.makeText( context, getString( R.string.add_shop_message_shop_created, event.shopName ), Toast.LENGTH_SHORT ).show()
-                        }
-                        is AddShopViewModel.UiEvent.ShopUpdateError -> {
-                            Toast.makeText( context, R.string.add_shop_message_insert_error, Toast.LENGTH_SHORT ).show()
-                        }
-                    }
-                }
-            }
+        binding.streetNameFieldInput.doAfterTextChanged {
+            viewModel.newShop.street = it.toString()
+        }
+
+        binding.saveButton.setOnClickListener {
+            viewModel.addShop()
         }
     }
 
