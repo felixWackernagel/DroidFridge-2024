@@ -1,6 +1,7 @@
 package de.wackernagel.droidfridge.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,7 +18,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
 import de.wackernagel.droidfridge.R
@@ -34,13 +34,10 @@ class UpdateShopFragment : BaseFragment(), MenuProvider {
 
     private var _binding : FragmentUpdateShopBinding? = null
     private val binding get() = _binding!!
-
-    private val args: UpdateShopFragmentArgs by navArgs()
-
     private val viewModel: UpdateShopViewModel by viewModels (
         extrasProducer = {
             defaultViewModelCreationExtras.withCreationCallback<UpdateShopViewModelFactory> {
-                    factory -> factory.create( args.shopId )
+                    factory -> factory.create( UpdateShopFragmentArgs.fromBundle( requireArguments() ).shopId )
             }
         }
     )
@@ -52,6 +49,9 @@ class UpdateShopFragment : BaseFragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d("DroidFridge", "UpdateShop for " + viewModel.shop.value)
+        Log.d("DroidFridge", "UpdateShop for " + requireArguments().getLong("shopId"))
 
         bindShop()
 
@@ -66,16 +66,18 @@ class UpdateShopFragment : BaseFragment(), MenuProvider {
     }
 
     private fun bindShop() {
-        val shop = viewModel.shop.value ?: return
-
-        binding.shopNameField.setText(shop.name)
-        binding.shopStreetField.setText(shop.street)
-        binding.shopStreetnumberField.setText(shop.streetNumber)
-        binding.shopPostalcodeField.setText(shop.postalCode)
-        binding.shopCityField.setText(shop.city)
-        binding.shopCountryField.setText(shop.country)
-        binding.shopPhoneField.setText(shop.phone)
-        binding.shopDetailsField.setText(shop.details)
+        viewModel.shop.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.shopNameField.setText(it.name)
+                binding.shopStreetField.setText(it.street)
+                binding.shopStreetnumberField.setText(it.streetNumber)
+                binding.shopPostalcodeField.setText(it.postalCode)
+                binding.shopCityField.setText(it.city)
+                binding.shopCountryField.setText(it.country)
+                binding.shopPhoneField.setText(it.phone)
+                binding.shopDetailsField.setText(it.details)
+            }
+        }
     }
 
     private fun setupListeners() {
