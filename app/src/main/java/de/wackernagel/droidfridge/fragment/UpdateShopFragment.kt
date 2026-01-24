@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
 import de.wackernagel.droidfridge.R
@@ -34,21 +35,94 @@ class UpdateShopFragment : BaseFragment(), MenuProvider {
     private var _binding : FragmentUpdateShopBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<UpdateShopViewModel>(
+    private val args: UpdateShopFragmentArgs by navArgs()
+
+    private val viewModel: UpdateShopViewModel by viewModels (
         extrasProducer = {
             defaultViewModelCreationExtras.withCreationCallback<UpdateShopViewModelFactory> {
-                    factory -> factory.create( UpdateShopFragmentArgs.fromBundle( requireArguments() ).shopId )
+                    factory -> factory.create( args.shopId )
             }
         }
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _binding = FragmentUpdateShopBinding.inflate( inflater, container, false )
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bindShop()
+
+        setupListeners()
+
+        observeEvents()
+
+        requireActivity().addMenuProvider( this, viewLifecycleOwner, Lifecycle.State.RESUMED )
 
         // avoid to expand or collapse CollapsingToolbarLayout by scrolling the RecyclerView
         ViewCompat.setNestedScrollingEnabled( binding.nestedScrollView, false )
+    }
+
+    private fun bindShop() {
+        val shop = viewModel.shop.value ?: return
+
+        binding.shopNameField.setText(shop.name)
+        binding.shopStreetField.setText(shop.street)
+        binding.shopStreetnumberField.setText(shop.streetNumber)
+        binding.shopPostalcodeField.setText(shop.postalCode)
+        binding.shopCityField.setText(shop.city)
+        binding.shopCountryField.setText(shop.country)
+        binding.shopPhoneField.setText(shop.phone)
+        binding.shopDetailsField.setText(shop.details)
+    }
+
+    private fun setupListeners() {
+        binding.saveButton.setOnClickListener {
+            val shop = viewModel.shop.value ?: return@setOnClickListener
+
+            shop.apply {
+                name = binding.shopNameField.text.toString()
+                street = binding.shopStreetField.text.toString()
+                streetNumber = binding.shopStreetnumberField.text.toString()
+                postalCode = binding.shopPostalcodeField.text.toString()
+                city = binding.shopCityField.text.toString()
+                country = binding.shopCountryField.text.toString()
+                phone = binding.shopPhoneField.text.toString()
+                details = binding.shopDetailsField.text.toString()
+            }
+
+            viewModel.updateShop()
+        }
+
+        binding.shopDetailsField.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.updateShop()
+                return@OnEditorActionListener true
+            }
+            return@OnEditorActionListener false
+        })
+    }
+
+    private fun observeEvents() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle( Lifecycle.State.STARTED ) {
+                viewModel.eventFlow.collectLatest { event ->
+                    when( event ) {
+                        is UpdateShopViewModel.UiEvent.ShopUpdated -> {
+                            Toast.makeText( context, getString( R.string.update_shop_message_shop_updated, event.shopName ), Toast.LENGTH_SHORT ).show()
+                        }
+                        is UpdateShopViewModel.UiEvent.ShopDeleted -> {
+                            Toast.makeText( context, getString( R.string.update_shop_message_shop_deleted, event.shopName ), Toast.LENGTH_SHORT ).show()
+                        }
+                        is UpdateShopViewModel.UiEvent.ShopUpdateError -> {
+                            Toast.makeText( context, R.string.update_shop_message_update_error, Toast.LENGTH_SHORT ).show()
+                        }
+                    }
+                }
+            }
+        }
 
         viewModel.navigateToList.observe(viewLifecycleOwner) { navigate ->
             if (navigate) {
@@ -88,38 +162,6 @@ class UpdateShopFragment : BaseFragment(), MenuProvider {
                         }
                     }
                     binding.saveButton.isEnabled = true
-                }
-            }
-        }
-
-        binding.shopDetailsField.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.updateShop()
-                return@OnEditorActionListener true
-            }
-            return@OnEditorActionListener false
-        })
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().addMenuProvider( this, viewLifecycleOwner, Lifecycle.State.RESUMED )
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle( Lifecycle.State.STARTED ) {
-                viewModel.eventFlow.collectLatest { event ->
-                    when( event ) {
-                        is UpdateShopViewModel.UiEvent.ShopUpdated -> {
-                            Toast.makeText( context, getString( R.string.update_shop_message_shop_updated, event.shopName ), Toast.LENGTH_SHORT ).show()
-                        }
-                        is UpdateShopViewModel.UiEvent.ShopDeleted -> {
-                            Toast.makeText( context, getString( R.string.update_shop_message_shop_deleted, event.shopName ), Toast.LENGTH_SHORT ).show()
-                        }
-                        is UpdateShopViewModel.UiEvent.ShopUpdateError -> {
-                            Toast.makeText( context, R.string.update_shop_message_update_error, Toast.LENGTH_SHORT ).show()
-                        }
-                    }
                 }
             }
         }
