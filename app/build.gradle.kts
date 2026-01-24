@@ -63,6 +63,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.android.coroutines)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
