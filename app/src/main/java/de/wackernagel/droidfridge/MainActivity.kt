@@ -5,20 +5,28 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.wackernagel.droidfridge.databinding.ActivityMainBinding
+import de.wackernagel.droidfridge.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -33,10 +41,14 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     )
     private var previousDestinationId = -1
 
+    private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate( layoutInflater )
+        binding = ActivityMainBinding.inflate( layoutInflater )
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
@@ -60,6 +72,25 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         disableExpandableAndCollapsableAppBarByDragAndDrop( binding.appBar )
 
         addMenuProvider( this )
+
+        lifecycleScope.launch {
+            repeatOnLifecycle( Lifecycle.State.STARTED ) {
+                viewModel.showSampleCreatorAction.collect { show ->
+                    if( show ) {
+                        Snackbar
+                            .make(
+                                binding.mainView,
+                                getString(R.string.home_sample_description),
+                                Snackbar.LENGTH_INDEFINITE
+                            )
+                            .setAnchorView(binding.bottomNavigation)
+                            .setAction(R.string.home_sample_action) {
+                                viewModel.runSampler()
+                            }.show()
+                    }
+                }
+            }
+        }
     }
 
     private fun disableExpandableAndCollapsableAppBarByDragAndDrop(appBar: AppBarLayout) {
@@ -73,7 +104,7 @@ class MainActivity : AppCompatActivity(), MenuProvider {
     }
 
     /**
-     * Show a X icon instead of a arrow icon on the toolbar.
+     * Show an X icon instead of an arrow icon on the toolbar.
      * Do this only for some special destinations.
      * It is not required to undo this action because it is done automatically.
      */
@@ -122,5 +153,13 @@ class MainActivity : AppCompatActivity(), MenuProvider {
             R.id.deleteShop -> false
             else -> NavigationUI.onNavDestinationSelected( menuItem, navController )
         }
+    }
+
+    fun loadToolbarImage(url: String?, placeholderResId: Int ) {
+         binding.toolbarImage.load(url) {
+             crossfade(true)
+             placeholder(placeholderResId)
+             error(placeholderResId)
+         }
     }
 }

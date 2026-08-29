@@ -38,12 +38,15 @@
     <string name="shop_message_removed_from_favorites">%1$s was removed from favorites.</string>
 
     <string name="home_fragment_name">Dashboard</string>
-    <string name="home_empty_dashboard">Shops, shopping, recipes and more.\nMore coming soon.</string>
+    <string name="home_empty_dashboard">Shops, purchases, recipes, and more.\nMore will be available here soon.</string>
     <string name="home_description_heart_icon">Icon of a heart</string>
     <string name="home_description_cake_icon">Icon of a cake</string>
     <string name="home_description_basket_icon">Icon of a basket</string>
     <string name="home_description_bakery_dining_icon">Icon of a bakery dining</string>
     <string name="home_description_store_icon">Icon of a store</string>
+    <string name="home_sample_headline">Welcome</string>
+    <string name="home_sample_description">Would you like to start with a few examples?</string>
+    <string name="home_sample_action">Create</string>
 
     <string name="update_shop_fragment_name">Update Shop</string>
     <string name="update_shop_menu_delete_shop">Delete</string>

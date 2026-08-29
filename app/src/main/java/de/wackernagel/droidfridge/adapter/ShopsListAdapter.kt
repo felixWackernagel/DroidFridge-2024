@@ -12,6 +12,7 @@ import de.wackernagel.droidfridge.data.ShopWithOpeningHours
 import de.wackernagel.droidfridge.data.isClosedSoon
 import de.wackernagel.droidfridge.data.isOpen
 import de.wackernagel.droidfridge.databinding.ShopListItemBinding
+import coil.load
 
 class ShopsListAdapter( private val clickListener: (shopId: Long) -> Unit ):
     ListAdapter<ShopWithOpeningHours, ShopsListAdapter.ViewHolder>(ShopDiffItemCallback()){
@@ -60,6 +61,12 @@ class ShopsListAdapter( private val clickListener: (shopId: Long) -> Unit ):
                 } else {
                     visibility = View.GONE
                 }
+            }
+
+            binding.image.load(item.shop.imagePath) {
+                crossfade(true)
+                placeholder(R.drawable.shop_list_item_default)
+                error(R.drawable.shop_list_item_default)
             }
         }
     }

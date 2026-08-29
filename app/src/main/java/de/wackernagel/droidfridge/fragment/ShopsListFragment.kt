@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +16,8 @@ import de.wackernagel.droidfridge.R
 import de.wackernagel.droidfridge.adapter.ShopsListAdapter
 import de.wackernagel.droidfridge.databinding.FragmentShopsListBinding
 import de.wackernagel.droidfridge.viewmodel.ShopsListViewModel
-
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ShopsListFragment : BaseFragment() {
@@ -23,17 +27,13 @@ class ShopsListFragment : BaseFragment() {
 
     private val viewModel by viewModels<ShopsListViewModel>()
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        _binding = FragmentShopsListBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle? ): View {
+        _binding = FragmentShopsListBinding.inflate(inflater, parent, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val adapter = ShopsListAdapter { shopId ->
-            viewModel.showItemDetails(shopId)
-        }
+        val adapter = ShopsListAdapter { shopId -> viewModel.onAction(ShopsListViewModel.ShopsListAction.NavigateToShop(shopId)) }
         binding.shopsList.adapter = adapter
         binding.shopsList.layoutManager = GridLayoutManager( context, resources.getInteger( R.integer.grid_column_count ) )
 
@@ -46,26 +46,28 @@ class ShopsListFragment : BaseFragment() {
             }
         }
 
-        viewModel.navigateToAddItem.observe(viewLifecycleOwner) { navigate ->
-            if (navigate) {
-                val toShopCreator = ShopsListFragmentDirections.actionShopsListFragmentToAddShopFragment()
-                findNavController().navigate( toShopCreator )
-                viewModel.onItemAddNavigated()
-            }
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle( Lifecycle.State.STARTED ) {
+                viewModel.uiEvent.collectLatest { event ->
+                    when( event ) {
+                        is ShopsListViewModel.UiEvent.NavigateToAddShop -> {
+                            val toShopCreator = ShopsListFragmentDirections.actionShopsListFragmentToAddShopFragment()
+                            findNavController().navigate( toShopCreator )
+                        }
 
-        viewModel.navigateToDetailItem.observe(viewLifecycleOwner) { shopId ->
-            shopId?.let {
-                val toShopDetails = ShopsListFragmentDirections.actionShopsListFragmentToShopFragment( shopId )
-                findNavController().navigate( toShopDetails )
-                viewModel.onShowItemDetailsNavigated()
+                        is ShopsListViewModel.UiEvent.NavigateToShop -> {
+                            val toShopDetails = ShopsListFragmentDirections.actionShopsListFragmentToShopFragment( event.shopId )
+                            findNavController().navigate( toShopDetails )
+                        }
+                    }
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        activateAddFAB { viewModel.addItem() }
+        activateAddFAB { viewModel.onAction(ShopsListViewModel.ShopsListAction.NavigateToAddShop) }
     }
 
     override fun onPause() {

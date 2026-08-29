@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.google.android.gms.oss.licenses.v2.OssLicensesMenuActivity
 import de.wackernagel.droidfridge.BuildConfig
 import de.wackernagel.droidfridge.R
 import de.wackernagel.droidfridge.databinding.FragmentAboutBinding

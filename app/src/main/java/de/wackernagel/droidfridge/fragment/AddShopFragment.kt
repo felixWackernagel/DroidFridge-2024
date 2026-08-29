@@ -43,8 +43,8 @@ class AddShopFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycleScope.launch {
-            repeatOnLifecycle( Lifecycle.State.STARTED ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle( Lifecycle.State.STARTED ) {
                 viewModel.eventFlow.collectLatest { event ->
                     when( event ) {
                         is AddShopViewModel.UiEvent.ShopCreated -> {

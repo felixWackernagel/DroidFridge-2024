@@ -9,14 +9,14 @@ plugins {
 
 android {
     namespace = "de.wackernagel.droidfridge"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "de.wackernagel.droidfridge"
         minSdk = 29
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 3
-        versionName = "1.2"
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -84,7 +84,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.coroutines.test)
 
     // OSS Licenses
     implementation(libs.play.services.oss.licenses)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+
+    // Image Loading
+    implementation(libs.coil)
 }

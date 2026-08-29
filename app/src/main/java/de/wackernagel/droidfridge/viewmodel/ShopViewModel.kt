@@ -3,6 +3,7 @@ package de.wackernagel.droidfridge.viewmodel
 import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -22,15 +23,16 @@ import java.util.StringJoiner
 class ShopViewModel @AssistedInject constructor(
     @Assisted shopId: Long,
     private val shopRepository: ShopRepository
-): BaseViewModel() {
+): ViewModel() {
     sealed class UiEvent {
         data class MarkedAsFavorite(val shopName: String): UiEvent()
         data class UnmarkedAsFavorite(val shopName: String): UiEvent()
         data class ShopDeleted(val shopName: String): UiEvent()
+        data class NavigateToEditShop(val shopId: Long): UiEvent()
     }
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
     val shop = shopRepository.getShopWithOpeningHours( shopId )
 
@@ -57,9 +59,9 @@ class ShopViewModel @AssistedInject constructor(
             it.isFavorite = !it.isFavorite
             update( it )
             if( it.isFavorite ) {
-                _eventFlow.emit( UiEvent.MarkedAsFavorite( shopName = it.name ) )
+                _uiEvent.emit( UiEvent.MarkedAsFavorite( shopName = it.name ) )
             } else {
-                _eventFlow.emit( UiEvent.UnmarkedAsFavorite( shopName = it.name ) )
+                _uiEvent.emit( UiEvent.UnmarkedAsFavorite( shopName = it.name ) )
             }
         }
     }
@@ -67,14 +69,15 @@ class ShopViewModel @AssistedInject constructor(
     fun deleteShop() = viewModelScope.launch {
         shop.value?.shop?.let {
             shopRepository.delete( it )
-            _eventFlow.emit( UiEvent.ShopDeleted( shopName = it.name ) )
-            listItems()
+            _uiEvent.emit( UiEvent.ShopDeleted( shopName = it.name ) )
         }
     }
 
     fun navigateToEditor() {
-        shop.value?.shop?.let {
-            editItem( it.id )
+        viewModelScope.launch {
+            shop.value?.shop?.let {
+                _uiEvent.emit(UiEvent.NavigateToEditShop( shopId = it.id ))
+            }
         }
     }
 

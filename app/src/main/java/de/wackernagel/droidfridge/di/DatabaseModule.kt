@@ -6,6 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import de.wackernagel.droidfridge.Preferences
+import de.wackernagel.droidfridge.dao.OpeningHoursDao
 import de.wackernagel.droidfridge.dao.ShopDao
 import de.wackernagel.droidfridge.database.AppDatabase
 import de.wackernagel.droidfridge.database.ShopLocalSource
@@ -17,9 +19,15 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Provides
     @Singleton
+    fun providePreferences( app: Application ): Preferences {
+        return Preferences(app)
+    }
+
+    @Provides
+    @Singleton
     fun provideAppDatabase( app: Application ): AppDatabase {
         return Room.databaseBuilder( app, AppDatabase::class.java, "droidfridge.db" )
-            .createFromAsset( "database/sampled_droidfridge.db" )
+            .fallbackToDestructiveMigration(true)
             .build()
     }
 
@@ -27,6 +35,12 @@ class DatabaseModule {
     @Singleton
     fun provideShopDao( db: AppDatabase ): ShopDao {
         return db.shopDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideOpeningHoursDao( db: AppDatabase ): OpeningHoursDao {
+        return db.openingHours
     }
 
     @Provides

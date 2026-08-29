@@ -37,6 +37,9 @@
     <string name="home_description_basket_icon">Icon von einem Einkaufskorb</string>
     <string name="home_description_bakery_dining_icon">Icon von Backwaren</string>
     <string name="home_description_store_icon">Icon eines Geschäftes</string>
+    <string name="home_sample_headline">Herzlich Willkommen</string>
+    <string name="home_sample_description">Möchtest du mit ein paar Beispielen beginnen?</string>
+    <string name="home_sample_action">Anlegen</string>
 
     <string name="update_shop_fragment_name">Geschäft bearbeiten</string>
     <string name="update_shop_menu_delete_shop">Löschen</string>

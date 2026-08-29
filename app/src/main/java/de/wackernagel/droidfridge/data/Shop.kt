@@ -21,9 +21,9 @@ data class Shop (
     @ColumnInfo(name = "country")
     var country: String? = null,
     @ColumnInfo(name = "latitude")
-    var latitude: Long? = null,
+    var latitude: Double? = null,
     @ColumnInfo(name = "longitude")
-    var longitude: Long? = null,
+    var longitude: Double? = null,
     @ColumnInfo(name = "phone")
     var phone: String? = null,
     @ColumnInfo(name = "image_path")

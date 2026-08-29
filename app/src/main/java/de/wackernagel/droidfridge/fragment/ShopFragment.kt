@@ -18,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
+import de.wackernagel.droidfridge.MainActivity
 import de.wackernagel.droidfridge.R
 import de.wackernagel.droidfridge.data.Shop
 import de.wackernagel.droidfridge.databinding.FragmentShopBinding
@@ -50,7 +51,7 @@ class ShopFragment : BaseFragment(), MenuProvider {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle( Lifecycle.State.STARTED ) {
-                viewModel.eventFlow.collectLatest { event ->
+                viewModel.uiEvent.collectLatest { event ->
                     when( event ) {
                         is ShopViewModel.UiEvent.MarkedAsFavorite -> {
                             Toast.makeText( context, getString( R.string.shop_message_add_to_favorites, event.shopName ), Toast.LENGTH_SHORT ).show()
@@ -60,6 +61,11 @@ class ShopFragment : BaseFragment(), MenuProvider {
                         }
                         is ShopViewModel.UiEvent.ShopDeleted -> {
                             Toast.makeText( context, getString( R.string.shop_message_shop_deleted, event.shopName ), Toast.LENGTH_SHORT ).show()
+                            findNavController().navigate( ShopFragmentDirections.actionShopFragmentToShopsListFragment() )
+                        }
+                        is ShopViewModel.UiEvent.NavigateToEditShop -> {
+                            val toUpdateShop = ShopFragmentDirections.actionShopFragmentToUpdateShopFragment( event.shopId )
+                            findNavController().navigate( toUpdateShop )
                         }
                     }
                 }
@@ -93,20 +99,8 @@ class ShopFragment : BaseFragment(), MenuProvider {
                 { viewModel.toggleFavoriteShop() },
                 shop.isFavorite
             )
-        }
 
-        viewModel.navigateToEditItem.observe(viewLifecycleOwner) { shopId ->
-            shopId?.let {
-                val toUpdateShop = ShopFragmentDirections.actionShopFragmentToUpdateShopFragment( shopId )
-                findNavController().navigate( toUpdateShop )
-                viewModel.onItemEditNavigated()
-            }
-        }
-        viewModel.navigateToList.observe(viewLifecycleOwner) { navigateToListItems ->
-            if( navigateToListItems ) {
-                findNavController().navigate( ShopFragmentDirections.actionShopFragmentToShopsListFragment() )
-                viewModel.onNavigatedToList()
-            }
+            (activity as? MainActivity)?.loadToolbarImage( shop.imagePath, R.drawable.shop_list_item_default )
         }
     }
 
@@ -122,7 +116,7 @@ class ShopFragment : BaseFragment(), MenuProvider {
             }
             R.id.deleteShop -> {
                 viewModel.deleteShop()
-                return true
+                true
             }
             else -> false
         }
