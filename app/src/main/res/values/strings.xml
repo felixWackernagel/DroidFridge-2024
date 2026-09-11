@@ -44,7 +44,6 @@
     <string name="home_description_basket_icon">Icon of a basket</string>
     <string name="home_description_bakery_dining_icon">Icon of a bakery dining</string>
     <string name="home_description_store_icon">Icon of a store</string>
-    <string name="home_sample_headline">Welcome</string>
     <string name="home_sample_description">Would you like to start with a few examples?</string>
     <string name="home_sample_action">Create</string>
 
