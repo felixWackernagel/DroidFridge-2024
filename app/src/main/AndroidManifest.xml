@@ -25,6 +25,25 @@
         </activity>
         <activity
             android:name="com.google.android.gms.oss.licenses.v2.OssLicensesMenuActivity"/>
+
+        <receiver android:name=".broadcastreceiver.AppUpdateReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Remove default WorkManager initializer to apply custom configuration (see Application class) -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- If you are using Hilt to provide WorkManager configuration, you must remove the default initializer -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
     </application>
 
     <queries>

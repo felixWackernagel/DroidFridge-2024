@@ -58,8 +58,11 @@ room {
 
 dependencies {
     // Hilt DI
-    implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.fragment)
+    implementation(libs.androidx.hilt.work)
 
     // Room
     implementation(libs.android.room.runtime)
@@ -80,12 +83,15 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.worker.runtime.ktx)
 
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.coroutines.test)
+    androidTestImplementation(libs.androidx.worker.testing)
+    androidTestImplementation(libs.truth)
 
     // OSS Licenses
     implementation(libs.play.services.oss.licenses)
