@@ -17,12 +17,10 @@ import androidx.room.PrimaryKey
         )
     ],
     indices = [
-        Index(
-            value= [ "shop_id" ]
-        )
+        Index(value = [ "shop_id", "day" ])
     ]
 )
-data class OpeningHours (
+data class OpeningHours(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
     @ColumnInfo(name = "shop_id")
@@ -33,4 +31,10 @@ data class OpeningHours (
     var end: String,
     @ColumnInfo(name = "day")
     var day: Int
-)
+) {
+    /**
+     * Returns formatted time range string (e.g. "08:00 - 20:00").
+     */
+    val timeRange: String
+        get() = "$start - $end"
+}

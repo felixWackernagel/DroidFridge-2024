@@ -12,7 +12,7 @@ class CreateSampleDataUseCase @Inject constructor(
     private val openingHoursDao: OpeningHoursDao
 ) {
     suspend operator fun invoke() {
-        Log.e("DF","invoke")
+        Log.e(TAG,"Create Sample-Data")
 
         val frida = Shop()
         frida.name = "Frida"
@@ -27,14 +27,10 @@ class CreateSampleDataUseCase @Inject constructor(
         frida.imagePath = "https://lh3.googleusercontent.com/p/AF1QipNOIVPD0FWevkxEtCGHnKV2DdojSwpUAFflQcfV=w408-h306-k-no"
         frida.details = "Lotto, Frischetheke"
         frida.category = "Lebensmittel"
-        try {
-            val fridaId = shopDao.insert(frida)
-            openingHours( openingHoursDao, fridaId, "08:00", "20:00", 6 )
-            Log.e("DF","opening hours created")
-        } catch(error: Exception) {
-            Log.e("DF","error ${error.toString()}")
-        }
-        Log.e("DF","frida created")
+        val fridaId = shopDao.insert(frida)
+
+        openingHours( openingHoursDao, fridaId, "08:00", "20:00", 6 )
+        Log.e(TAG,"frida created")
 
         val dm = Shop()
         dm.name = "dm-Markt"
@@ -51,6 +47,7 @@ class CreateSampleDataUseCase @Inject constructor(
         val dmId = shopDao.insert(dm)
 
         openingHours( openingHoursDao, dmId, "08:00", "20:00", 6 )
+        Log.e(TAG,"dm-Markt created")
 
         val lidl = Shop()
         lidl.name = "Lidl"
@@ -68,6 +65,26 @@ class CreateSampleDataUseCase @Inject constructor(
         val lidlId = shopDao.insert(lidl)
 
         openingHours( openingHoursDao, lidlId, "07:00", "21:00", 6 )
+        Log.e(TAG,"lidl created")
+
+        val lts = Shop()
+        lts.name = "LTS Presseshop"
+        lts.street = "Bautzner Landstraße"
+        lts.streetNumber = "15"
+        lts.postalCode = "01324"
+        lts.city = "Dresden"
+        lts.country = "Deutschland"
+        lts.phone = "0351 2630908"
+        lts.latitude = 51.06350885961888
+        lts.longitude = 13.823011152149055
+        lts.details = "DHL Post"
+        lts.category = "Schreibwaren"
+        val ltsId = shopDao.insert(lts)
+
+        openingHours( openingHoursDao, ltsId, "09:00", "13:15", 5 )
+        openingHours( openingHoursDao, ltsId, "14:00", "18:00", 5 )
+        openingHoursDao.insert(OpeningHours(0L, ltsId, "09:00", "12:00", 6))
+        Log.i(TAG, "LTS Shop created")
     }
 
     /**
@@ -78,5 +95,9 @@ class CreateSampleDataUseCase @Inject constructor(
             val openingHour = OpeningHours( 0L, shopId, start, end, day )
             dao.insert( openingHour )
         }
+    }
+
+    companion object {
+        private const val TAG = "DroidFridge"
     }
 }

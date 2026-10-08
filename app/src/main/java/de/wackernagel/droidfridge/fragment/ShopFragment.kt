@@ -1,7 +1,6 @@
 package de.wackernagel.droidfridge.fragment
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -140,26 +139,5 @@ class ShopFragment : BaseFragment(), MenuProvider {
         _binding = null
     }
 
-    fun buildAddress( shop: Shop ): String {
-        val line1 = StringBuilder()
-        if( !TextUtils.isEmpty( shop.street ) ) line1.append( shop.street )
-        if( !TextUtils.isEmpty( shop.streetNumber ) ) {
-            if( line1.isNotEmpty() ) line1.append( " " )
-            line1.append( shop.streetNumber )
-        }
-        val line2 = StringBuilder()
-        if( !TextUtils.isEmpty( shop.postalCode ) ) line2.append( shop.postalCode )
-        if( !TextUtils.isEmpty( shop.city ) ) {
-            if( line2.isNotEmpty() ) line2.append( " " )
-            line2.append( shop.city )
-        }
-        val address = StringBuilder()
-        if( line1.isNotEmpty() ) address.append( line1.toString() )
-        if( line1.isNotEmpty() && line2.isNotEmpty() ) address.append( "\n" )
-        if( line2.isNotEmpty() ) address.append( line2.toString() )
-        if( address.isNotEmpty() && !TextUtils.isEmpty( shop.country ) ) address.append( "\n" )
-        if( !TextUtils.isEmpty( shop.country ) ) address.append( shop.country )
-
-        return address.toString()
-    }
+    fun buildAddress( shop: Shop ): String = shop.formattedAddress
 }

@@ -11,7 +11,7 @@ import de.wackernagel.droidfridge.data.Shop
 @Database(
     entities = [Shop::class, OpeningHours::class],
     exportSchema = true,
-    version = 2
+    version = 3
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

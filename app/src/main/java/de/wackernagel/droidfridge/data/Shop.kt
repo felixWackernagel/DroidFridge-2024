@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity( tableName = "shops" )
-data class Shop (
+data class Shop(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
     @ColumnInfo(name = "name")
@@ -34,4 +34,27 @@ data class Shop (
     var details: String? = null,
     @ColumnInfo(name = "category")
     var category: String? = null
-)
+) {
+    /**
+     * Returns a formatted multi-line address string if address details exist.
+     */
+    val formattedAddress: String
+        get() {
+            val streetLine = listOfNotNull(street?.takeIf { it.isNotBlank() }, streetNumber?.takeIf { it.isNotBlank() })
+                .joinToString(" ")
+            val cityLine = listOfNotNull(postalCode?.takeIf { it.isNotBlank() }, city?.takeIf { it.isNotBlank() })
+                .joinToString(" ")
+            val countryLine = country?.takeIf { it.isNotBlank() }
+            return listOfNotNull(
+                streetLine.takeIf { it.isNotBlank() },
+                cityLine.takeIf { it.isNotBlank() },
+                countryLine
+            ).joinToString("\n")
+        }
+
+    /**
+     * Checks if coordinates (latitude & longitude) are set for this shop.
+     */
+    val hasCoordinates: Boolean
+        get() = latitude != null && longitude != null
+}

@@ -15,8 +15,8 @@ android {
         applicationId = "de.wackernagel.droidfridge"
         minSdk = 29
         targetSdk = 37
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,6 +42,12 @@ android {
         viewBinding = true
         dataBinding = false
         buildConfig = true
+    }
+
+    sourceSets {
+        getByName("androidTest") {
+            assets.directories.add("$projectDir/schemas")
+        }
     }
 }
 
@@ -92,12 +98,17 @@ dependencies {
     androidTestImplementation(libs.androidx.coroutines.test)
     androidTestImplementation(libs.androidx.worker.testing)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.android.room.testing)
+    androidTestImplementation(libs.kotlinx.serialization.json)
 
     // OSS Licenses
     implementation(libs.play.services.oss.licenses)
 
     // DataStore
     implementation(libs.datastore.preferences)
+
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Image Loading
     implementation(libs.coil)

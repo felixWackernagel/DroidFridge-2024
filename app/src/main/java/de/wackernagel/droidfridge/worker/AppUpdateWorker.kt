@@ -31,9 +31,11 @@ class AppUpdateWorker @AssistedInject constructor(
             Log.i(TAG, "app update worker is started (from: $previousVersion > to: $currentVersion)")
 
             if( previousVersion < currentVersion ) {
-                Log.i(TAG, "app update is done")
                 preferences.setLastVersionCode(currentVersion)
+                Log.i(TAG, "stored current app version in preferences")
             }
+
+            Log.i(TAG, "app update worker is done")
 
             Result.success()
         }

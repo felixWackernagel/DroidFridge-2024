@@ -25,6 +25,7 @@ preferences = "1.2.1"
 coroutinesTest = "1.11.0"
 coil = "2.7.0"
 truth = "1.4.5"
+kotlinxSerialization = "1.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 android-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 android-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+android-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -54,6 +56,7 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 androidx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref="coroutinesTest" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
